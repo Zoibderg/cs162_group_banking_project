@@ -30,12 +30,15 @@ Samediff Bank has a 25-year-old banking account system. It was created using pro
 
 **(2 points possible) When using a class for the scenario provided, will there be any static member variables? If yes, explain reasons to support your idea.**
 
-+ static function for generating unique account numbers, bank name
++ bank name: to avoid storing it repeatedly in each account object
++ interest rates: to keep it consistent for all savings, credit, etc. accounts
++ transaction fees?
++ minimum balance requirements
 
 **(2 points possible) What kind of constructors would you need? List them.**
 
 + A default constructor for creating an empty account. 
-+ An overloaded? constructor for setting account details like account number, balance, and type at creation.
++ An overloaded constructor for setting account details like account number, balance, and type at creation.
 + According to an account system, customers can have more than one type of an account.
 
 **(4 points possible) How many classes should you design?**
@@ -46,7 +49,14 @@ Samediff Bank has a 25-year-old banking account system. It was created using pro
 + Customer? For address and other info
 
 **(4 points possible ) Write the purpose of each class.**
- 
+
++ BankAccount: base class for the different types of bank accounts, like SavingsAccount and CheckingAccount. It would hold common attributes and methods like account number, balance, and deposit/withdrawal functionality.
++ SavingsAccount: would inherit from BankAccount and have additional attributes and methods specific to savings accounts, like interest rate calculation.
++ CheckingAccount: CheckingAccount would also inherit from BankAccount and handle checking account-specific features, like overdraft limits or check writing.
++ CreditAccount: represent credit card accounts and manage features like credit limit, APR, and reward points?
++ Transaction: processing different types of transactions, such as deposits, withdrawals, and transfers, for all account types.
++ Customer: store customer information, such as name, address, contact details, and a list of BankAccounts associated with the customer.
++ BankAccount Container: to hold and manage all the bank accounts within the system?
 
 **(2 points possible) What is the class relationship “has a relationship (composition)” , “is a relationship (inheritance)” or both?**
 
