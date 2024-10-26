@@ -65,4 +65,4 @@ Samediff Bank has a 25-year-old banking account system. It was created using pro
 
 **4. (4 points possible) Jot down ideas what each class looks like. Then draw a UML diagram for all classes using correct symbols and class relationship.**
 
-Should figure out who is doing this
+Added a quick mock up of a UML for us to work on. Just need to make sure that we are doing it correctly and have everything there. I think it together really quick so there are probably many improvements to be made.
