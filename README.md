@@ -1,68 +1,117 @@
+---
+icon: building-columns
+---
+
 # Banking Project Overview
 
 ## Phase 1
 
-### Scenario:
+### **Appropriate primitive data types needed for a bank account system**
 
-Samediff Bank has a 25-year-old banking account system. It was created using procedural programming. Samediff Bank needs to improve the security and maintainability of the system using an object-oriented programming (OOP) approach. Their bank manager has decided to hire you to develop, implement, and test a new OOP application using efficient data structures and programming techniques.
+**a.     Account Holder Name: string.**&#x20;
 
-**Phase 1 Requirements: Answers to the discussion questions, using Phase 1 Grading Rubric to optimize your grade.**
+Probably two using two string variables for first\_name and last\_name to keep names structured.
 
-**Use the following questions to help guide your team to accomplish tasks required in Phase 1:**
+**b.     Account Balance: double**
 
-**(4 points possible) What are appropriate primitive data types needed for a bank account system? List them.**
+Provides the necessary precision to handle financial data accurately.
 
-+ Account Holder Name: string, Maybe one for first name and one for last name
+**c.     Account Type: string**
 
-+ Account Balance: double (Most precise)
+Allows flexibility to store different account types as text (e.g., "Checking", "Savings", “Credit”).
 
-+ Account Type: string (Checking, savings, etc)
+**d.     Interest Rate: double**
 
-+ Interest Rate: double
+Precision is important for interest rate calculations, especially when compounding.
 
-+ Transaction Amount: double
+**e.     Transaction Amount: double**
 
-+ Transaction Date: time_t stuff. Think it comes out to a long int
+Precision is needed for accurate transaction handling.
 
-+ Customer ID: int
+**f.      Transaction Date: time\_t**
 
-+ PIN/Password: string (scrambled/hashed)
+Typically, a time\_t, often represented as a long int.
 
-**(2 points possible) When using a class for the scenario provided, will there be any static member variables? If yes, explain reasons to support your idea.**
+**g.     Customer ID: int**
 
-+ bank name: to avoid storing it repeatedly in each account object
-+ interest rates: to keep it consistent for all savings, credit, etc. accounts
-+ transaction fees?
-+ minimum balance requirements
+A unique integer identifier for each customer.
 
-**(2 points possible) What kind of constructors would you need? List them.**
+**h.    PIN/Password: string**
 
-+ A default constructor for creating an empty account. 
-+ An overloaded constructor for setting account details like account number, balance, and type at creation.
-+ According to an account system, customers can have more than one type of an account.
+Although stored as a string, this value should be hashed or encrypted for security.
 
-**(4 points possible) How many classes should you design?**
 
-+ SavingsAccount, CheckingAccount, Credit Account?
-+ Maybe a BankAccount container to hold the above
-+ Transaction: Handles deposits, withdrawals, transfers.
-+ Customer? For address and other info
 
-**(4 points possible ) Write the purpose of each class.**
+### **Static member variables**
 
-+ BankAccount: base class for the different types of bank accounts, like SavingsAccount and CheckingAccount. It would hold common attributes and methods like account number, balance, and deposit/withdrawal functionality.
-+ SavingsAccount: would inherit from BankAccount and have additional attributes and methods specific to savings accounts, like interest rate calculation.
-+ CheckingAccount: CheckingAccount would also inherit from BankAccount and handle checking account-specific features, like overdraft limits or check writing.
-+ CreditAccount: represent credit card accounts and manage features like credit limit, APR, and reward points?
-+ Transaction: processing different types of transactions, such as deposits, withdrawals, and transfers, for all account types.
-+ Customer: store customer information, such as name, address, contact details, and a list of BankAccounts associated with the customer.
-+ BankAccount Container: to hold and manage all the bank accounts within the system?
+**1.     The bank name:** Since all accounts belong to the same bank, the bank name can be defined as a static member variable. This allows all instances of the class to share the same bank name without duplicating data in each account object. Additionally, if the bank name ever needs to be updated, it can be changed in one place for all accounts.
 
-**(2 points possible) What is the class relationship “has a relationship (composition)” , “is a relationship (inheritance)” or both?**
+**2.     Interest Rate for Savings Accounts:** All savings accounts share the same interest rate. This makes it easy to update the rate across all accounts if needed.
 
-+ Inheritance: SavingsAccount and CheckingAccount inherit from BankAccount.
-+ Composition: A Customer "has a" BankAccount.
+**3.     Transaction Fee:** a static member could store this value to apply consistently across accounts.
 
-**4. (4 points possible) Jot down ideas what each class looks like. Then draw a UML diagram for all classes using correct symbols and class relationship.**
+**4.     Total Number of Accounts:** Useful for generating unique account numbers or for tracking growth.
 
-Added a quick mock up of a UML for us to work on. Just need to make sure that we are doing it correctly and have everything there. I think it together really quick so there are probably many improvements to be made.
+
+
+### **Constructors needed**
+
+**a.     Default constructor**
+
+A default constructor is useful for creating an empty account with default values. This could be helpful when initializing an account object before setting its specific details.
+
+**b.    Overloaded Constructor**
+
+An overloaded constructor would allow the creation of an account with specific details provided at the time of creation. This constructor could take parameters like the account number, initial balance, account type, and customer ID to fully initialize an account when it is created.
+
+
+
+**Seven Classes to be designed:** BankAccount, SavingsAccount, CheckingAccount. CreditAccount, Transaction, Customer, BankAccountContainer
+
+## Purpose of each class:
+
+**a.      BankAccount (Base Class)**
+
+Base class for different account types, including attributes and methods common to all accounts, like account\_number, balance, and basic deposit/withdraw methods.
+
+**b.    SavingsAccount (Derived from BankAccount)**
+
+Adds features specific to savings accounts, such as an interest\_rate attribute and methods for interest calculation. Inherits core functionality from BankAccount.
+
+**c.     CheckingAccount (Derived from BankAccount)**
+
+Adds checking-specific attributes and methods, such as an overdraft\_limit and potentially check-writing functions. Also inherits common functionality from BankAccount.
+
+**d.    CreditAccount (Derived from BankAccount)**
+
+Represents credit card accounts with features such as a credit\_limit, APR (annual percentage rate), and possibly reward points. This class can handle credit-specific methods, such as calculating monthly payments or interest on outstanding balances.
+
+**e.     Transaction**
+
+Manages the processing of various transaction types—deposits, withdrawals, and transfers. It could also store transaction-specific details, like transaction\_id, transaction\_date, transaction\_amount, and transaction\_type. As well as having methods to reverse or cancel any transactions.
+
+**f.      Customer**
+
+Stores customer details, such as name, address, contact\_info, and a list of associated BankAccount objects. This class could also include methods for managing and accessing the customer’s accounts as well as updating contact info.
+
+**g.     BankAccount Container**
+
+Acts as a manager for all BankAccount objects within the system. This container would oversee the creation, storage, and retrieval of accounts, allowing the system to efficiently manage multiple accounts across multiple customers. It could include methods to find accounts by account\_number or customer\_id and to handle bulk transactions if needed.
+
+
+
+## Class relationships
+
+**a.     “Is-a” Relationship (Inheritance)**
+
+BankAccount serves as the base class, and specific account types inherit from it. This defines an “is-a” relationship because SavingsAccount, CheckingAccount, and CreditAccount are all a BankAccount.
+
+**b.     “Has-a” Relationship (Composition)**
+
+Customer has a “has-a” relationship with BankAccount because each Customer can hold one or more BankAccount objects. This is composition because a Customer “has-a” BankAccount. A Transaction “has-a” date, amount, and is associated with one or more BankAccount objects (the accounts involved in the transaction).
+
+The BankAccount Container also has a composition relationship with BankAccount objects, as it manages a collection of accounts within the system.
+
+
+
+## UML:
