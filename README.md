@@ -115,3 +115,5 @@ The BankAccount Container also has a composition relationship with BankAccount o
 
 
 ## UML:
+
+<figure><img src=".gitbook/assets/cs162_group_project_uml.png" alt=""><figcaption></figcaption></figure>
