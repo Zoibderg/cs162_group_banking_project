@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Banking Project Overview](README.md)
+* [Bank Account Management System](README.md)

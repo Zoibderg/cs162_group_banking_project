@@ -1,119 +1,84 @@
 ---
 icon: building-columns
+description: >-
+  This project aims to develop a bank account management system that can
+  effectively manage multiple bank accounts with various features, such as
+  savings, checking, and credit accounts. It utilizes a se
+layout:
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
-# Banking Project Overview
+# Bank Account Management System
 
-## Phase 1
+#### Team Members
 
-### **Appropriate primitive data types needed for a bank account system**
+* Jordan Bassett
+* Tayler Caufield
+* Austin Tesch
 
-**a.     Account Holder Name: string.**&#x20;
+#### Course: CS162 | Instructor: Steve Smiley
 
-Probably two using two string variables for first\_name and last\_name to keep names structured.
+## Overview
 
-**b.     Account Balance: double**
+This project aims to develop a bank account management system that can effectively manage multiple bank accounts with various features, such as savings, checking, and credit accounts. It utilizes a series of data structures to create, save, and load account information in different formats. The project is divided into phases, with the current status covering Phases 1 and 2.
 
-Provides the necessary precision to handle financial data accurately.
+## Features to be Implemented
 
-**c.     Account Type: string**
+### Account Attributes (Phase 1)
 
-Allows flexibility to store different account types as text (e.g., "Checking", "Savings", “Credit”).
+* **Account Holder Name**: Managed using `string` variables for both first and last names to maintain structure.
+* **Account Balance**: Stored as `double` for precise financial calculations.
+* **Account Type**: Stores different types of accounts (e.g., "Checking", "Savings", "Credit") as text.
+* **Interest Rate**: `double` type to handle precision in compounding calculations.
+* **Transaction Amount**: `double` type to ensure accuracy.
+* **Transaction Date**: Uses `time_t` to record the exact date of transactions.
+* **Customer ID**: A unique `int` identifier for each customer.
+* **PIN/Password**: Stored as a `string` and should be hashed or encrypted for security purposes.
 
-**d.     Interest Rate: double**
+#### Account Relationships and Class Hierarchy
 
-Precision is important for interest rate calculations, especially when compounding.
+The system employs object-oriented design, emphasizing both **inheritance** and **composition**:
 
-**e.     Transaction Amount: double**
+* **Inheritance**: `BankAccount` is the base class for other account types such as `SavingsAccount`, `CheckingAccount`, and `CreditAccount`.
+* **Composition**: The `Customer` class maintains a "has-a" relationship with `BankAccount` objects, indicating that customers can hold multiple accounts.
+* **Classes Designed**:
+  * `BankAccount` (Base Class)
+  * `SavingsAccount`, `CheckingAccount`, `CreditAccount` (Derived from `BankAccount`)
+  * `Transaction` (Handles transactions such as deposits, withdrawals, and transfers)
+  * `Customer` (Stores customer information)
+  * `BankAccountContainer` (Manages all `BankAccount` objects within the system)
 
-Precision is needed for accurate transaction handling.
+#### Constructors
 
-**f.      Transaction Date: time\_t**
+* **Default Constructor**: Initializes empty accounts with default values.
+* **Overloaded Constructor**: Creates accounts with specific details at the time of initialization, allowing greater control over data.
 
-Typically, a time\_t, often represented as a long int.
+#### Static Member Variables
 
-**g.     Customer ID: int**
+* **Bank Name**: Shared across all accounts to avoid redundancy.
+* **Interest Rate for Savings Accounts**: Static value to be easily updated.
+* **Transaction Fee**: Consistent across all accounts.
+* **Total Number of Accounts**: Useful for tracking and generating unique identifiers.
 
-A unique integer identifier for each customer.
-
-**h.    PIN/Password: string**
-
-Although stored as a string, this value should be hashed or encrypted for security.
-
-
-
-### **Static member variables**
-
-**1.     The bank name:** Since all accounts belong to the same bank, the bank name can be defined as a static member variable. This allows all instances of the class to share the same bank name without duplicating data in each account object. Additionally, if the bank name ever needs to be updated, it can be changed in one place for all accounts.
-
-**2.     Interest Rate for Savings Accounts:** All savings accounts share the same interest rate. This makes it easy to update the rate across all accounts if needed.
-
-**3.     Transaction Fee:** a static member could store this value to apply consistently across accounts.
-
-**4.     Total Number of Accounts:** Useful for generating unique account numbers or for tracking growth.
-
-
-
-### **Constructors needed**
-
-**a.     Default constructor**
-
-A default constructor is useful for creating an empty account with default values. This could be helpful when initializing an account object before setting its specific details.
-
-**b.    Overloaded Constructor**
-
-An overloaded constructor would allow the creation of an account with specific details provided at the time of creation. This constructor could take parameters like the account number, initial balance, account type, and customer ID to fully initialize an account when it is created.
-
-
-
-**Seven Classes to be designed:** BankAccount, SavingsAccount, CheckingAccount. CreditAccount, Transaction, Customer, BankAccountContainer
-
-## Purpose of each class:
-
-**a.      BankAccount (Base Class)**
-
-Base class for different account types, including attributes and methods common to all accounts, like account\_number, balance, and basic deposit/withdraw methods.
-
-**b.    SavingsAccount (Derived from BankAccount)**
-
-Adds features specific to savings accounts, such as an interest\_rate attribute and methods for interest calculation. Inherits core functionality from BankAccount.
-
-**c.     CheckingAccount (Derived from BankAccount)**
-
-Adds checking-specific attributes and methods, such as an overdraft\_limit and potentially check-writing functions. Also inherits common functionality from BankAccount.
-
-**d.    CreditAccount (Derived from BankAccount)**
-
-Represents credit card accounts with features such as a credit\_limit, APR (annual percentage rate), and possibly reward points. This class can handle credit-specific methods, such as calculating monthly payments or interest on outstanding balances.
-
-**e.     Transaction**
-
-Manages the processing of various transaction types—deposits, withdrawals, and transfers. It could also store transaction-specific details, like transaction\_id, transaction\_date, transaction\_amount, and transaction\_type. As well as having methods to reverse or cancel any transactions.
-
-**f.      Customer**
-
-Stores customer details, such as name, address, contact\_info, and a list of associated BankAccount objects. This class could also include methods for managing and accessing the customer’s accounts as well as updating contact info.
-
-**g.     BankAccount Container**
-
-Acts as a manager for all BankAccount objects within the system. This container would oversee the creation, storage, and retrieval of accounts, allowing the system to efficiently manage multiple accounts across multiple customers. It could include methods to find accounts by account\_number or customer\_id and to handle bulk transactions if needed.
-
-
-
-## Class relationships
-
-**a.     “Is-a” Relationship (Inheritance)**
-
-BankAccount serves as the base class, and specific account types inherit from it. This defines an “is-a” relationship because SavingsAccount, CheckingAccount, and CreditAccount are all a BankAccount.
-
-**b.     “Has-a” Relationship (Composition)**
-
-Customer has a “has-a” relationship with BankAccount because each Customer can hold one or more BankAccount objects. This is composition because a Customer “has-a” BankAccount. A Transaction “has-a” date, amount, and is associated with one or more BankAccount objects (the accounts involved in the transaction).
-
-The BankAccount Container also has a composition relationship with BankAccount objects, as it manages a collection of accounts within the system.
-
-
-
-## UML:
+#### UML Diagram
 
 <figure><img src=".gitbook/assets/cs162_group_project_uml.png" alt=""><figcaption></figcaption></figure>
+
+### Saving and Loading Account Data (Phase 2)
+
+* **Binary File Usage**: Provides efficiency for storing a large amount of data and ensures fast read/write times.
+* **Text File Usage**: Provides human-readable format, making debugging easier.
+* **File Handling**:
+  * Discusses the pros and cons of binary vs. text files.
+  * Covers appropriate data types for customer information in different file types.
+  * Guides the usage of binary and text files based on the amount of data and the type of operations being performed.
+* **Data Structures**: Provides a structured way to manage related information for a bank checking account, including error handling for file input validation with code samples.
