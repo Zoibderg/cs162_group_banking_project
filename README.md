@@ -1,22 +1,3 @@
----
-icon: building-columns
-description: >-
-  This project aims to develop a bank account management system that can
-  effectively manage multiple bank accounts with various features, such as
-  savings, checking, and credit accounts. It utilizes a se
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Bank Account Management System
 
 #### Team Members
