@@ -50,10 +50,6 @@ The system employs object-oriented design, emphasizing both **inheritance** and 
 * **Transaction Fee**: Consistent across all accounts.
 * **Total Number of Accounts**: Useful for tracking and generating unique identifiers.
 
-#### UML Diagram
-
-<figure><img src=".gitbook/assets/cs162_group_project_uml.png" alt=""><figcaption></figcaption></figure>
-
 ### Saving and Loading Account Data (Phase 2)
 
 This phase focuses on implementing file handling mechanisms and defining data structures to enhance the functionality and robustness of the banking system.
@@ -115,3 +111,19 @@ if (value < 0) {
 }
 ```
 
+### Phase 3
+
+#### Polymorphic Functions and Dynamic Binding
+
+* **withdraw()**: Some account types handle penalties differently. For instance, `SavingsAccount` applies penalties for low balances, and `CDAccount` applies maturity penalties. These penalties need to be specific to the account type, so this function should be polymorphic.
+* **deposit()**: For most accounts, the deposit logic might be the same. However, `CreditAccount` might have special rules (e.g., paying off credit or applying a minimum payment). Making this function virtual allows for these customizations.
+* **applyMonthlyInterest()**: Accounts like `SavingsAccount` and `MoneyMarketAccount` earn monthly interest. Since the interest rate and calculations are specific to each type of account, this function should be polymorphic.
+* **generateStatement()**: For reporting different account details (including penalties, interest, or overdraft limits), this function can also be virtual to handle specific account requirements.
+
+#### Tracking Multiple Accounts for a Single Customer
+
+One way to store multiple accounts for a customer could be to allocate individual arrays for each customer so that you can either pull up the whole array and all the accounts or use a pointer to pick a single account from the list. Another approach could be to write into a file for each customer and label them by customer name to easily access throughout the program.
+
+## UML Diagram
+
+<figure><img src=".gitbook/assets/Untitled Diagram-5.png" alt=""><figcaption></figcaption></figure>
