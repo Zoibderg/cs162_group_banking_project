@@ -55,7 +55,7 @@ void Customer::updateAccount(int account_id) {
 void Customer::displayAccounts() const {
     std::cout << "Customer: " << getFullName() << " (ID: " << customer_id << ")" << std::endl;
     for (const auto* account : accounts) {
-        account->displayAccount(); // Assuming BankAccount has a displayAccount() function
+        account->generateStatement(); // BankAccount has a generateStatement() function
     }
 }
 
