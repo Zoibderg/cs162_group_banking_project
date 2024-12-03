@@ -3,7 +3,7 @@
 #include <string>
 
 // declaration of the Customer class for now, we will probably end up with a customer.h?
- */
+
 class Customer;
 
 /**
