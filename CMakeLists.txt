@@ -5,4 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(cs162_group_banking_project main.cpp
         menu.cpp
-        menu.h)
+        menu.h
+        BankAccountContainer.cpp
+        Customer.cpp
+        Customer.h)

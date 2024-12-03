@@ -1,7 +1,5 @@
 # ninja log v6
-2	244	1733179945198610614	build.ninja	89480d9aa067dfbc
+2	244	1733244826748902884	build.ninja	89480d9aa067dfbc
 1	1941	1733179945224620259	CMakeFiles/cs162_group_banking_project.dir/main.cpp.o	ebd9ebc101467663
-1	1945	1733179945225149964	CMakeFiles/cs162_group_banking_project.dir/menu.cpp.o	b4dcfd11ea40105
-1945	2430	1733179947169501152	cs162_group_banking_project	be936375873bf973
 33	2482	1733180158286898046	CMakeFiles/cs162_group_banking_project.dir/menu.cpp.o	b4dcfd11ea40105
 2482	3263	1733180160736607635	cs162_group_banking_project	be936375873bf973

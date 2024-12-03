@@ -1,5 +1,5 @@
 #include "BankAccountContainer.h"
-#include "Customer.h" //will need this
+#include "Customer.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream> // For error messages
