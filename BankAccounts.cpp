@@ -43,7 +43,11 @@ public:
 
 	void generate_statement()
 	{
-
+             cout << " Here is your account statement. " << endl; 
+		cout << " ACCOUNT OWNER: " << get_account_holder() << endl; 
+		cout << " CURRENT BALANCE: " << get_curent_balance() << endl;
+		cout << " CURRENT INTEREST RATE: " <<  calcuate_interest() << endl; 
+		cout << " OVERDRAFT CHARGES: " << check_overdraft() << endl;	
 	}
 private:
 	int account_number;
@@ -61,7 +65,7 @@ public:
 	double withdrawlamount; 
 	void calcuate_interest() // calculates the interest based on the amount in the users account 
 	{
-
+         
 	}
 	 
 	void apply_interest() // applys the interest to the account
