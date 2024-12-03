@@ -111,7 +111,6 @@ void BankAccountContainer::sortCustomersByLastName()
 
 //Generates and returns the next unique account number.
 //returns the next unique account number as an integer.
- */
 int BankAccountContainer::getNextAccountNumber()
 {
     return accountNumberGenerator++;
