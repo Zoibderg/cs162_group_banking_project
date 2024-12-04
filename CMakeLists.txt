@@ -16,4 +16,6 @@ add_executable(cs162_group_banking_project main.cpp
         SavingsAccount.cpp
         SavingsAccount.h
         CreditAccount.cpp
-        CreditAccount.h)
+        CreditAccount.h
+        Transaction.cpp
+        Transaction.h)
