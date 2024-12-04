@@ -10,4 +10,10 @@ add_executable(cs162_group_banking_project main.cpp
         Customer.cpp
         Customer.h
         BankAccount.cpp
-        BankAccount.h)
+        BankAccount.h
+        CheckingAccount.cpp
+        CheckingAccount.h
+        SavingsAccount.cpp
+        SavingsAccount.h
+        CreditAccount.cpp
+        CreditAccount.h)
