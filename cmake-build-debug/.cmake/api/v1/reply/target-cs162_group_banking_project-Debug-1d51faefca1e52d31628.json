@@ -98,7 +98,8 @@
 			"sourceIndexes" : 
 			[
 				2,
-				5
+				5,
+				7
 			]
 		}
 	],
@@ -141,8 +142,13 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "BankAccounts.cpp",
+			"path" : "BankAccount.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "BankAccount.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
