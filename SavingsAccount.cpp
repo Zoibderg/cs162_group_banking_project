@@ -1,38 +1,59 @@
-//
-// Created by Austin Tesch on 12/4/24.
-//
-
-#include "SavingsAccount.h"
 #include "BankAccount.h"
 #include <iostream>
 using namespace std;
 
-class SavingsAccount : public BankAccount
+/**
+ * SavingsAccount class represents a savings account derived from the base BankAccount class.
+ * It provides additional functionality specific to savings accounts, such as interest calculations and penalties.
+ */
+class SavingsAccount : public BankAccount 
 {
 public:
-    double interest_rate = 1.05;
-    double withdrawlamount;
-    void calcuate_interest() // calculates the interest based on the amount in the users account
-    {
+    double interest_rate = 1.05; // Interest rate for the savings account
+    double withdraw_amount{}; // Amount to be withdrawn
 
+    /**
+     * Constructor to initialize the savings account with account details.
+     * @param accountNumber The unique number of the account.
+     * @param holderName The name of the account holder.
+     * @param initialBalance The initial balance of the account.
+     */
+    SavingsAccount(int accountNumber, const string &holderName, double initialBalance)
+        : BankAccount(accountNumber, holderName, "Savings", "Active", initialBalance) {}
+
+    /**
+     * Method to calculate interest based on the current balance.
+     * This method calculates interest using the defined interest rate.
+     */
+    static void calculate_interest()
+    {
+        // Placeholder for interest calculation
     }
 
-    void apply_interest() // applys the interest to the account
+    /**
+     * Method to apply the calculated interest to the account balance.
+     * This method will add the calculated interest to the current balance.
+     */
+    static void apply_interest()
     {
-
+        // Placeholder for applying interest
     }
-    void Withdrawl()
+
+    /**
+     * Method to withdraw money, with additional logic for penalties if withdrawal amount is below $1000.
+     */
+    void withdraw() 
     {
-        if (withdrawlamount < 1000.00) // applys the penalty is the user withdrawls more than $1000
+        if (withdraw_amount < 1000.00) // Apply a penalty if the withdrawal amount is less than $1000
         {
-            cout << " Withdrawl penalty of $50.00 will be added" << endl;
-            withdrawl_penalty += withdrawlamount; // adds penalty to withdrawl amount
-            cout << " Total amount: $" << withdrawlamount << endl;
+            cout << " Withdraw penalty of $50.00 will be added" << endl;
+            withdraw_amount += withdraw_penalty; // Add penalty to the withdrawal amount
+            cout << " Total amount: $" << withdraw_amount << endl;
             cout << " === Current balance === " << endl;
-            get_current_balance(); // displays current balance after the withdrawl
+            cout << "Current Balance: $" << getBalance() << "\n" << endl; // Display the current balance after the withdrawal
         }
     }
 
 private:
-    double withdrawl_penalty = 50.00;
+    double withdraw_penalty = 50.00; // Penalty fee for withdrawals below a certain threshold
 };
