@@ -8,4 +8,5 @@ add_executable(cs162_group_banking_project main.cpp
         menu.h
         BankAccountContainer.cpp
         Customer.cpp
-        Customer.h)
+        Customer.h
+        BankAccount.cpp)
