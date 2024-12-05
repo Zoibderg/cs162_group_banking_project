@@ -18,4 +18,5 @@ add_executable(cs162_group_banking_project main.cpp
         CreditAccount.cpp
         CreditAccount.h
         Transaction.cpp
-        Transaction.h)
+        Transaction.h
+        CertificateOfDepositBase.cpp)
