@@ -4,6 +4,9 @@
 class ThreeMonthCD : public BankAccount
 {
 public:
+/* default contructor
+*/
+void ThreeMonthCD(double balance) 
 	/*
 	shows how long the duration of the Cd is
 	*/
