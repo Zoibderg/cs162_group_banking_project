@@ -5,11 +5,12 @@ using namepsace std;
 class SixMonthCD : public BankAccount
 {
 public:
+// defauly constructor 
 void SixMonthCD(double balance)
 
-    time_t duration = 6;
-    double apy = 0.03;
-    double penalty = 0.2;
+    time_t duration = 6; // duration of CD
+    double apy = 0.03; // apy for specifc CD duration 
+    double penalty = 0.2; // penalty for specifc CD duration 
     /*
     calculates the penalty amount that will be applied to the customers
     balance by using the current balance and the penalty percentage
