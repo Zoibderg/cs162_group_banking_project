@@ -24,4 +24,5 @@ add_executable(cs162_group_banking_project main.cpp
         MoneyMarketBase.cpp
         MMDA.h
         MMDA.cpp
-        BalanceHandler.cpp)
+        BalanceHandler.cpp
+        CertificateOfDepositBase.cpp)
