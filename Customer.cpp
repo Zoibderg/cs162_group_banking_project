@@ -9,14 +9,11 @@ Customer::Customer(const std::string& first, const std::string& last)
     : customerId(generateCustomerId()), firstName(first), lastName(last) {}
 
 Customer::~Customer() {
-    for (auto* account : accounts) {
-        delete account;
-    }
     accounts.clear();
 }
 
-void Customer::addAccount(BankAccount* account) {
-    accounts.push_back(account);
+void Customer::addAccount(std::shared_ptr<BankAccount> account) {
+    accounts.push_back(std::weak_ptr<BankAccount>(account));
 }
 
 void Customer::updateAccount(int account_id) {
@@ -24,8 +21,10 @@ void Customer::updateAccount(int account_id) {
 }
 
 void Customer::displayAccounts() const {
-    for (const auto* account : accounts) {
-        account->generateStatement();
-        std::cout << "------------------------\n";
+    for (const std::weak_ptr<BankAccount>& weakAccount : accounts) {
+        if (auto sharedAccount = weakAccount.lock()) {
+            sharedAccount->generateStatement();
+            std::cout << "------------------------\n";
+        }
     }
 }

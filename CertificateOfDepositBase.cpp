@@ -1,15 +1,4 @@
 #include "CertificateOfDepositBase.h"
 
-CertificateOfDepositBase::CertificateOfDepositBase()
-    : balance(0.0) {}
-
-CertificateOfDepositBase::CertificateOfDepositBase(double initialBalance)
-    : balance(initialBalance) {}
-
-double CertificateOfDepositBase::getBalance() const {
-    return balance;
-}
-
-void CertificateOfDepositBase::setBalance(double newBalance) {
-    balance = newBalance;
-}
+// Remove all implementations since they're now in the header file
+// Leave file empty or delete it and update CMakeLists.txt

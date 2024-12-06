@@ -6,8 +6,9 @@
 
 class ThreeMonthCD : public BankAccount, public CertificateOfDepositBase {
 public:
-    ThreeMonthCD(double initialBalance);
+    explicit ThreeMonthCD(double initialBalance);
     double calculateInterest() const override;
+    using CertificateOfDepositBase::getBalance;
 };
 
 #endif 

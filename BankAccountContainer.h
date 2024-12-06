@@ -5,6 +5,7 @@
 #include <vector>    // For managing a dynamic list of customers
 #include "Customer.h" // Provides the definition of Customer class
 #include "BankAccount.h" // Provides the definition of BankAccount class
+#include <memory>
 
 /*
  BankAccountContainer class is responsible for managing customers
@@ -17,8 +18,8 @@ class BankAccountContainer
 {
 private:
     int accountNumberGenerator = 1000; // Tracks the next unique account number
-    std::vector<Customer*> customers; // List of pointers to all customers in the system
-    std::vector<BankAccount*> accounts; // List of pointers to all bank accounts in the system
+    std::vector<std::unique_ptr<Customer>> customers; // List of pointers to all customers in the system
+    std::vector<std::unique_ptr<BankAccount>> accounts; // List of pointers to all bank accounts in the system
 
 public:
     /* Adds a new customer to the container.

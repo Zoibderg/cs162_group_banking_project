@@ -1,5 +1,9 @@
 #include "CheckingAccount.h"
 
+CheckingAccount::CheckingAccount()
+    : BankAccount(0, nullptr, "Checking", "Active", 0.0),
+      overdraft_limit(500.0) {}
+
 CheckingAccount::CheckingAccount(double initialBalance)
     : BankAccount(0, nullptr, "Checking", "Active", initialBalance),
       overdraft_limit(500.0) {}

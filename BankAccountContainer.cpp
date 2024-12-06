@@ -5,17 +5,17 @@
 /* Adds a new customer to the container. */
 void BankAccountContainer::addCustomer(Customer* customer)
 {
-    customers.push_back(customer);
+    customers.push_back(std::unique_ptr<Customer>(customer));
 }
 
 //* Finds a customer by their unique ID
 Customer* BankAccountContainer::findCustomerById(const std::string& customerId)
 {
-    for (Customer* customer : customers)
+    for (const auto& customer : customers)
     {
         if (customer->getId() == customerId)
         {
-            return customer;
+            return customer.get();
         }
     }
     return nullptr;
@@ -25,11 +25,12 @@ Customer* BankAccountContainer::findCustomerById(const std::string& customerId)
 bool BankAccountContainer::deleteCustomer(const std::string& customerId)
 {
     auto it = std::find_if(customers.begin(), customers.end(),
-        [&customerId](Customer* c) { return c->getId() == customerId; });
+        [&customerId](const std::unique_ptr<Customer>& c) { 
+            return c->getId() == customerId; 
+        });
     if (it != customers.end())
     {
-        delete* it;
-        customers.erase(it);
+        customers.erase(it);  // unique_ptr will automatically delete the Customer
         return true;
     }
     return false;
@@ -38,7 +39,7 @@ bool BankAccountContainer::deleteCustomer(const std::string& customerId)
 // Displays all customers and their associated accounts
 void BankAccountContainer::displayAllCustomers() const
 {
-    for (const Customer* customer : customers)
+    for (const auto& customer : customers)
     {
         std::cout << "Customer ID: " << customer->getId() << std::endl;
         std::cout << "Name: " << customer->getFullName() << std::endl;
@@ -51,7 +52,9 @@ void BankAccountContainer::displayAllCustomers() const
 void BankAccountContainer::sortCustomersByLastName()
 {
     std::sort(customers.begin(), customers.end(),
-        [](Customer* a, Customer* b) { return a->getLastName() < b->getLastName(); });
+        [](const std::unique_ptr<Customer>& a, const std::unique_ptr<Customer>& b) {
+            return a->getLastName() < b->getLastName();
+        });
 }
 
 // Generates the next unique account number
@@ -85,18 +88,8 @@ void BankAccountContainer::loadFromFile(const std::string& filename)
 //adds a new bank account
 void BankAccountContainer::addAccount(BankAccount* account)
 {
-    accounts.push_back(account);
+    accounts.push_back(std::unique_ptr<BankAccount>(account));
 }
 
 //Destructor to clean up dynamically allocated memory
-BankAccountContainer::~BankAccountContainer()
-{
-    for (Customer* customer : customers)
-    {
-        delete customer;
-    }
-    for (BankAccount* account : accounts)
-    {
-        delete account;
-    }
-}
+BankAccountContainer::~BankAccountContainer() = default;

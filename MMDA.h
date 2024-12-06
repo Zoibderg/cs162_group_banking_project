@@ -33,7 +33,7 @@ public:
      * Withdraws money from the account
      * @param amount Amount to withdraw
      */
-    void withdraw(double amount);
+    void withdraw(double amount) override;
 
     /**
      * Applies penalty to the account
@@ -50,7 +50,7 @@ public:
      * Gets the balance of the account
      * @return Account balance
      */
-    double getBalance() const;
+    double getBalance() const override;
 };
 
 #endif 

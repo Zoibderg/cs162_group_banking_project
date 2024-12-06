@@ -6,8 +6,9 @@
 
 class OneYearCD : public BankAccount, public CertificateOfDepositBase {
 public:
-    OneYearCD(double initialBalance);
+    explicit OneYearCD(double initialBalance);
     double calculateInterest() const override;
+    using CertificateOfDepositBase::getBalance;
 };
 
 #endif 

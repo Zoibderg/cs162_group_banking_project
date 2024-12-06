@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <memory>
 
 class BankAccount; // Forward declaration
 
@@ -10,7 +11,7 @@ private:
     int customerId;
     std::string firstName;
     std::string lastName;
-    std::vector<BankAccount*> accounts;
+    std::vector<std::weak_ptr<BankAccount>> accounts;
 
     static int generateCustomerId() {
         static std::random_device rd;
@@ -34,7 +35,7 @@ public:
     std::string getFullName() const { return firstName + " " + lastName; }
 
     // Account management
-    void addAccount(BankAccount* account);
+    void addAccount(std::shared_ptr<BankAccount> account);
     void updateAccount(int account_id);
     void displayAccounts() const;
 };

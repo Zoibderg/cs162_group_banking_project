@@ -6,31 +6,31 @@
  */
 class CertificateOfDepositBase {
 protected:
-    double balance;
+    double cdBalance;
 
 public:
     /**
      * Default constructor
      */
-    CertificateOfDepositBase();
+    CertificateOfDepositBase() : cdBalance(0.0) {}
 
     /**
      * Constructor with initial balance
      * @param balance Initial balance for the CD
      */
-    explicit CertificateOfDepositBase(double balance);
+    explicit CertificateOfDepositBase(double balance) : cdBalance(balance) {}
 
     /**
      * Gets the current balance
      * @return Current balance
      */
-    virtual double getBalance() const;
+    virtual double getBalance() const { return cdBalance; }
 
     /**
      * Sets the balance to a new value
      * @param balance New balance value
      */
-    virtual void setBalance(double balance);
+    virtual void setBalance(double balance) { cdBalance = balance; }
 
     /**
      * Calculates interest for the CD

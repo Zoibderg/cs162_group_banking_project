@@ -26,7 +26,7 @@ public:
     virtual void deposit(double amount);
     virtual void withdraw(double amount);
     
-    double getBalance() const;
+    virtual double getBalance() const;
     std::string getAccountHolder() const;
     std::string getAccountType() const;
     std::string getAccountStatus() const;

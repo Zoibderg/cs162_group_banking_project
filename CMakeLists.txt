@@ -1,28 +1,19 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.26)
 project(cs162_group_banking_project)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cs162_group_banking_project main.cpp
-        menu.cpp
-        menu.h
-        BankAccountContainer.cpp
-        Customer.cpp
-        Customer.h
+add_executable(cs162_group_banking_project
+        main.cpp
         BankAccount.cpp
-        BankAccount.h
+        BankAccountContainer.cpp
         CheckingAccount.cpp
-        CheckingAccount.h
-        SavingsAccount.cpp
-        SavingsAccount.h
         CreditAccount.cpp
-        CreditAccount.h
-        Transaction.cpp
-        Transaction.h
-        CertificateOfDepositBase.cpp
-        MoneyMarketBase.h
-        MoneyMarketBase.cpp
-        MMDA.h
+        Customer.cpp
+        menu.cpp
         MMDA.cpp
-        BalanceHandler.cpp
-        CertificateOfDepositBase.cpp)
+        SavingsAccount.cpp
+        OneYearCD.cpp
+        ThreeMonthCD.cpp
+        SixMonthCD.cpp
+        MoneyMarketBase.cpp)

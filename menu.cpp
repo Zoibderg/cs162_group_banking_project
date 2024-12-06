@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "menu.h"
 #include "MMDA.h"
 #include "CheckingAccount.h"
 #include "SavingsAccount.h"
@@ -124,54 +124,40 @@ void Menu::addAccount() {
         return;
     }
 
-    BankAccount* newAccount = nullptr;
+    std::shared_ptr<BankAccount> newAccount;
 
     switch (accountChoice) {
-        case 1: {
-            newAccount = new MMDA(initialBalance);
+        case 1:
+            newAccount = std::make_shared<MMDA>(initialBalance);
             break;
-        }
-        case 2: {
-            newAccount = new CheckingAccount(initialBalance);
+        case 2:
+            newAccount = std::make_shared<CheckingAccount>(initialBalance);
             break;
-        }
-        case 3: {
-            newAccount = new SavingsAccount(initialBalance);
+        case 3:
+            newAccount = std::make_shared<SavingsAccount>(initialBalance);
             break;
-        }
-        case 4: {
-            newAccount = new CreditAccount(initialBalance);
+        case 4:
+            newAccount = std::make_shared<CreditAccount>(initialBalance);
             break;
-        }
-        case 5: {
-            newAccount = new OneYearCD(initialBalance);
+        case 5:
+            newAccount = std::make_shared<OneYearCD>(initialBalance);
             break;
-        }
-        case 6: {
-            newAccount = new ThreeMonthCD(initialBalance);
+        case 6:
+            newAccount = std::make_shared<ThreeMonthCD>(initialBalance);
             break;
-        }
-        case 7: {
-            newAccount = new SixMonthCD(initialBalance);
+        case 7:
+            newAccount = std::make_shared<SixMonthCD>(initialBalance);
             break;
-        }
-        default: {
+        default:
             cout << "Invalid account type selected." << endl;
             return;
-        }
     }
 
-    if (newAccount != nullptr) {
-        // Generate a unique account number
-        static int accountCounter = 1000; // Starting account number
+    if (newAccount) {
+        static int accountCounter = 1000;
         newAccount->setAccountNumber(accountCounter++);
-        
-        // Set the account holder
         newAccount->setCustomer(customer);
-
-        // Add the account to the container
-        container.addAccount(newAccount);
-
+        container.addAccount(newAccount.get());
         cout << "\nAccount created successfully!" << endl;
         cout << "Account Number: " << newAccount->getAccountNumber() << endl;
     }
@@ -202,12 +188,8 @@ Customer* Menu::selectOrCreateCustomer() {
         cout << "Enter Last Name: ";
         cin >> lastName;
 
-        // Create new customer with auto-generated ID
-        Customer* newCustomer = new Customer(firstName, lastName);
-        
-        // Check if generated ID already exists
-        while (container.findCustomerById(newCustomer->getId()) != nullptr)
-        {
+        auto newCustomer = new Customer(firstName, lastName);
+        while (container.findCustomerById(newCustomer->getId()) != nullptr) {
             delete newCustomer;
             newCustomer = new Customer(firstName, lastName);
         }
