@@ -1,102 +1,211 @@
-#include "BankAccountContainer.h"
-#include <algorithm>
-#include <fstream>
+#include "menu.h"
+#include <iostream>
+using namespace std;
 
-/* Adds a new customer to the container. */
-void BankAccountContainer::addCustomer(Customer* customer)
+// Starts the menu system by displaying the main menu
+void Menu::start()
 {
-    customers.push_back(customer);
+    displayMainMenu();
 }
 
-//* Finds a customer by their unique ID
-Customer* BankAccountContainer::findCustomerById(const std::string& customerId)
+// Displays the main menu and processes user choices
+void Menu::displayMainMenu()
 {
-    for (Customer* customer : customers)
+    int choice;
+
+    do
     {
-        if (customer->getId() == customerId)
+        cout << "\nMain Menu:" << endl;
+        cout << "1. Account Management" << endl;
+        cout << "2. Transaction Management" << endl;
+        cout << "3. CD Management" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
         {
-            return customer;
+        case 1:
+            displayAccountMenu();
+            break;
+        case 2:
+            displayTransactionMenu();
+            break;
+        case 3:
+            displayCDMenu();
+            break;
+        case 4:
+            cout << "Exiting the system. Goodbye!" << endl;
+            break;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+}
+
+// Displays the account management menu and processes user choices
+void Menu::displayAccountMenu()
+{
+    int choice;
+
+    do
+    {
+        cout << "\nAccount Management Menu:" << endl;
+        cout << "1. Add Account" << endl;
+        cout << "2. View All Accounts" << endl;
+        cout << "3. Delete Account" << endl;
+        cout << "4. Back to Main Menu" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            addAccount();
+            break;
+        case 2:
+            container.displayAllCustomers();
+            break;
+        case 3:
+            deleteAccount();
+            break;
+        case 4:
+            return;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+}
+
+// Adds a new account for a customer
+void Menu::addAccount()
+{
+    cout << "Adding a new account..." << endl;
+    Customer* customer = selectOrCreateCustomer();
+    if (customer)
+    {
+        cout << "Select Account Type:" << endl;
+        cout << "1. Checking Account" << endl;
+        cout << "2. Savings Account" << endl;
+        cout << "3. Credit Account" << endl;
+        cout << "4. Six-Month CD Account" << endl;
+        int choice;
+        cin >> choice;
+
+        BankAccount* account = nullptr;
+        double initialBalance;
+        cout << "Enter Initial Balance: ";
+        cin >> initialBalance;
+
+        switch (choice)
+        {
+        case 1:
+            account = new CheckingAccount(initialBalance);
+            break;
+        case 2:
+            account = new SavingsAccount(initialBalance);
+            break;
+        case 3:
+            account = new CreditAccount(initialBalance);
+            break;
+        case 4:
+            account = new SixMonthCD(initialBalance);
+            break;
+        default:
+            cout << "Invalid account type selected." << endl;
+            return;
+        }
+
+        if (account)
+        {
+            container.addAccount(account);
+            cout << "Account added successfully!" << endl;
         }
     }
-    return nullptr;
 }
 
-// Deletes a customer from the container by their unique ID
-bool BankAccountContainer::deleteCustomer(const std::string& customerId)
+// Deletes an account by account number
+void Menu::deleteAccount()
 {
-    auto it = std::find_if(customers.begin(), customers.end(),
-        [&customerId](Customer* c) { return c->getId() == customerId; });
-    if (it != customers.end())
+    int accountNumber;
+    cout << "Enter Account Number to delete: ";
+    cin >> accountNumber;
+
+    bool success = container.deleteAccount(accountNumber);
+    if (success)
     {
-        delete* it;
-        customers.erase(it);
-        return true;
+        cout << "Account deleted successfully!" << endl;
     }
-    return false;
-}
-
-// Displays all customers and their associated accounts
-void BankAccountContainer::displayAllCustomers() const
-{
-    for (const Customer* customer : customers)
+    else
     {
-        std::cout << "Customer ID: " << customer->getId() << std::endl;
-        std::cout << "Name: " << customer->getFullName() << std::endl;
-        customer->displayAccounts();
-        std::cout << "------------------------\n";
+        cout << "Account not found or could not be deleted." << endl;
     }
 }
 
-// Sorts all customers alphabetically by their last name
-void BankAccountContainer::sortCustomersByLastName()
+// Allows selecting an existing customer or creating a new one
+Customer* Menu::selectOrCreateCustomer()
 {
-    std::sort(customers.begin(), customers.end(),
-        [](Customer* a, Customer* b) { return a->getLastName() < b->getLastName(); });
-}
+    int choice;
+    cout << "\nCustomer Selection:" << endl;
+    cout << "1. Existing Customer" << endl;
+    cout << "2. New Customer" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
 
-// Generates the next unique account number
-int BankAccountContainer::getNextAccountNumber()
-{
-    return accountNumberGenerator++;
-}
-
-// Saves all customers and their associated accounts to a binary file
-void BankAccountContainer::saveToFile(const std::string& filename) const
-{
-    std::ofstream file(filename, std::ios::binary);
-    if (file.is_open())
+    if (choice == 1)
     {
-        // Implementation for saving to file
-        file.close();
+        string id;
+        cout << "Enter Customer ID: ";
+        cin >> id;
+        return container.findCustomerById(id);
     }
-}
-
-//loads all customers and their associated accounts from a binary file
-void BankAccountContainer::loadFromFile(const std::string& filename)
-{
-    std::ifstream file(filename, std::ios::binary);
-    if (file.is_open())
+    else if (choice == 2)
     {
-        // loading from file
-        file.close();
+        string firstName, lastName;
+        cout << "Enter First Name: ";
+        cin >> firstName;
+        cout << "Enter Last Name: ";
+        cin >> lastName;
+        Customer* newCustomer = new Customer(firstName, lastName);
+        container.addCustomer(newCustomer);
+        cout << "New customer created with ID: " << newCustomer->getId() << endl;
+        return newCustomer;
     }
-}
-
-//adds a new bank account
-void BankAccountContainer::addAccount(BankAccount* account)
-{
-    accounts.push_back(account);
-}
-
-//Destructor to clean up dynamically allocated memory
-BankAccountContainer::~BankAccountContainer()
-{
-    for (Customer* customer : customers)
+    else
     {
-        delete customer;
+        cout << "Invalid choice." << endl;
+        return nullptr;
     }
-    for (BankAccount* account : accounts)
+
+#include "BankAccountContainer.h"
+
+    bool BankAccountContainer::deleteAccount(int accountNumber)
     {
-        delete account;
+        auto it = std::find_if(accounts.begin(), accounts.end(),
+            [accountNumber](BankAccount* account)
+            {
+                return account->getAccountNumber() == accountNumber;
+            });
+
+        if (it != accounts.end())
+        {
+            delete* it; // Free memory
+            accounts.erase(it); // Remove from the vector
+            return true;
+        }
+        return false;
     }
+
+    BankAccount* BankAccountContainer::findAccountByNumber(int accountNumber)
+    {
+        for (BankAccount* account : accounts)
+        {
+            if (account->getAccountNumber() == accountNumber)
+            {
+                return account;
+            }
+        }
+        return nullptr;
+    }
+
 }

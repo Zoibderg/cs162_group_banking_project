@@ -1,13 +1,16 @@
+#pragma once
 #include <iostream>
 #include "CertificateOfDepositBase.h"
 #include "BankAccount.h"
+#include "SixMonthCD.h"
 using namepsace std;
 
 class SixMonthCD : public BankAccount
 {
 public:
 // defauly constructor 
-void SixMonthCD(double balance)
+    SixMonthCD::SixMonthCD(double initialBalance) 
+        : BankAccount(0, nullptr, "Six-Month CD", "Active", initialBalance)
 
     time_t duration = 6; // duration of CD
     double apy = 0.03; // apy for specifc CD duration 

@@ -1,13 +1,16 @@
-#ifndef SIX_MONTH_CD_H
-#define SIX_MONTH_CD_H
+#pragma once
 
-#include "CertificateOfDepositBase.h"
 #include "BankAccount.h"
 
-class SixMonthCD : public BankAccount, public CertificateOfDepositBase {
+/**
+ * SixMonthCD class represents a six-month certificate of deposit account.
+ */
+class SixMonthCD : public BankAccount
+{
 public:
+    /**
+     * Constructor for SixMonthCD.
+     * @param initialBalance The starting balance of the CD account.
+     */
     SixMonthCD(double initialBalance);
-    double calculateInterest() const override;
 };
-
-#endif 
