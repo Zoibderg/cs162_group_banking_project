@@ -5,6 +5,8 @@ using namepsace std;
 class SixMonthCD : public BankAccount
 {
 public:
+void SixMonthCD(double balance)
+
     time_t duration = 6;
     double apy = 0.03;
     double penalty = 0.2;
