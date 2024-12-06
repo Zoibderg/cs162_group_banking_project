@@ -4,6 +4,7 @@
 class OneYearCD : public BankAccount
 {
 public:
+// defauly constructor 
 void OneYearCD(double balance) 
 	time_t duration = 12;
 	double apy = 0.05;
