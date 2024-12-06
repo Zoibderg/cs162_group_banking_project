@@ -39,6 +39,18 @@ public:
      * Applies penalty to the account
      */
     void applyPenalty();
+
+    /**
+     * Sets the balance of the account
+     * @param newBalance New account balance
+     */
+    void setBalance(double newBalance);
+
+    /**
+     * Gets the balance of the account
+     * @return Account balance
+     */
+    double getBalance() const;
 };
 
 #endif 

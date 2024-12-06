@@ -1,28 +1,40 @@
 #ifndef BANK_ACCOUNT_H
 #define BANK_ACCOUNT_H
 
-#include "Customer.h"
+#include <string>
+#include <vector>
+#include <iostream>
+
+// Forward declaration
+class Customer;
 
 class BankAccount {
 private:
     int accountNumber;
     Customer* accountHolder;
+    std::string accountType;
+    std::string accountStatus;
     double balance;
+    std::vector<std::string> transactions;
 
 public:
-    BankAccount() : accountNumber(0), accountHolder(nullptr), balance(0.0) {}
-    explicit BankAccount(double initialBalance) 
-        : accountNumber(0), accountHolder(nullptr), balance(initialBalance) {}
+    BankAccount(int accountNumber, Customer* holder, const std::string& type, 
+                const std::string& status, double initialBalance);
+
     virtual ~BankAccount() = default;
 
-    void setAccountNumber(int number) { accountNumber = number; }
-    int getAccountNumber() const { return accountNumber; }
+    virtual void deposit(double amount);
+    virtual void withdraw(double amount);
     
-    void setCustomer(Customer* customer) { accountHolder = customer; }
-    Customer* getCustomer() const { return accountHolder; }
+    double getBalance() const;
+    std::string getAccountHolder() const;
+    std::string getAccountType() const;
+    std::string getAccountStatus() const;
+    int getAccountNumber() const;
     
-    double getBalance() const { return balance; }
-    void setBalance(double newBalance) { balance = newBalance; }
+    void setAccountNumber(int number);
+    void setCustomer(Customer* customer);
+    void generateStatement() const;
 };
 
 #endif

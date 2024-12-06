@@ -2,12 +2,12 @@
 
 // Default constructor
 MMDA::MMDA() 
-    : BankAccount(), handler(nullptr) {
+    : BankAccount(0, nullptr, "MMDA", "Active", 0.0), handler(nullptr) {
 }
 
 // Constructor with initial balance
 MMDA::MMDA(double initialBalance)
-    : BankAccount(initialBalance), handler(nullptr) {
+    : BankAccount(0, nullptr, "MMDA", "Active", initialBalance), handler(nullptr) {
 }
 
 // Destructor
@@ -26,4 +26,17 @@ void MMDA::withdraw(double amount) {
 void MMDA::applyPenalty() {
     double penalty = withdrawalPenalty(getBalance());
     setBalance(getBalance() - penalty);
+}
+
+// Set the balance of the account
+void MMDA::setBalance(double newBalance) {
+    if (newBalance >= 0) {
+        BankAccount::withdraw(getBalance());
+        BankAccount::deposit(newBalance);
+    }
+}
+
+// Get the balance of the account
+double MMDA::getBalance() const {
+    return BankAccount::getBalance();
 } 
