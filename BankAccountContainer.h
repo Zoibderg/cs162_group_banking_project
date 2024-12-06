@@ -1,6 +1,9 @@
-#include "BankAccountContainer.h"
-#include <algorithm>
-#include <fstream>
+#pragma once
+#include <algorithm> // For std::sort
+#include <fstream>   // For file operations
+#include <vector>    // For std::vector
+#include "Customer.h"
+#include "BankAccount.h">
 
 void BankAccountContainer::addCustomer(Customer* customer) {
     customers.push_back(customer);
