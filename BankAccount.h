@@ -35,6 +35,7 @@ public:
     void setAccountNumber(int number);
     void setCustomer(Customer* customer);
     void generateStatement() const;
+    virtual void displayAccountDetails() const;
 };
 
 #endif

@@ -43,6 +43,9 @@ public:
      */
     bool deleteCustomer(const std::string& customerId);
 
+    bool deleteAccount(int accountNumber); // Declaration for deleting an account
+    BankAccount* findAccountByNumber(int accountNumber); // Declaration for finding an account
+
     /* Displays all customers and their accounts
        goes through the vector and prints each customer's details */
     void displayAllCustomers() const;
