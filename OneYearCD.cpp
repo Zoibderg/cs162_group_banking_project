@@ -4,7 +4,7 @@
 class OneYearCD : public BankAccount
 {
 public:
-
+void OneYearCD(double balance) 
 	time_t duration = 12;
 	double apy = 0.05;
 	double penalty = 0.5;
