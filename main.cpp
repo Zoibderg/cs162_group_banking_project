@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Menu.h"
+#include "BankAccountContainer.h"
 using namespace std;
 
 int main() {
-    Menu menu;
+    BankAccountContainer container;
+    Menu menu(container);
     int choice;
     do {
         menu.displayMainMenu();

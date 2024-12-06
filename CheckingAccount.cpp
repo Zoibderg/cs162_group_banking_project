@@ -50,6 +50,36 @@ public:
         cout << "Current Balance: $" << getBalance() << "\n" << endl; // Display the updated balance
     }
 
+    // Default constructor
+    CheckingAccount()
+        : BankAccount(), overdraft_limit(500.0) {
+    }
+
+    // Constructor with initial balance
+    CheckingAccount(double initialBalance)
+        : BankAccount(initialBalance), overdraft_limit(500.0) {
+    }
+
+    // Check if overdraft limit is exceeded
+    void check_overdraft() {
+        if (getBalance() < 0) {
+            if (std::abs(getBalance()) > overdraft_limit) {
+                std::cout << "Warning: Account is over the overdraft limit!" << std::endl;
+                apply_overdraft_fee();
+            } else {
+                std::cout << "Account is in overdraft but within limit." << std::endl;
+            }
+        }
+    }
+
+    // Apply overdraft fee
+    void apply_overdraft_fee() {
+        const double OVERDRAFT_FEE = 35.0;
+        setBalance(getBalance() - OVERDRAFT_FEE);
+        std::cout << "Overdraft fee of $" << OVERDRAFT_FEE << " has been applied." << std::endl;
+        std::cout << "New balance: $" << getBalance() << std::endl;
+    }
+
 private:
     double overdraft_limit{}; // Limit for overdrafts on the account
     double interest = 0.02; // Interest rate for the checking account

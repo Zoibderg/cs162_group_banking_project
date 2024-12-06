@@ -1,31 +1,38 @@
-#ifndef CREDITACCOUNT_H
-#define CREDITACCOUNT_H
+#ifndef CREDIT_ACCOUNT_H
+#define CREDIT_ACCOUNT_H
 
 #include "BankAccount.h"
-#include <string>
 
 /**
- * CreditAccount class represents a credit account derived from the base BankAccount class.
- * It provides additional functionality specific to credit accounts, such as minimum payment calculations.
+ * Credit Account class
  */
-class CreditAccount : public BankAccount
-{
-public:
-    double APR; // Annual Percentage Rate for the credit account
-
-    /**
-     * Constructor to initialize the credit account with account details.
-     */
-    CreditAccount(int accountNumber, const std::string &holderName, double initialBalance);
-
-    /**
-     * Method to calculate the minimum payment required for the credit account.
-     */
-    void calculate_min_payment();
-
+class CreditAccount : public BankAccount {
 private:
-    double credit_limit; // Limit for the credit account
-    double current_balance; // Current balance for the credit account
+    double credit_limit;
+    double APR;
+    double min_payment;
+
+public:
+    /**
+     * Default constructor
+     */
+    CreditAccount();
+
+    /**
+     * Constructor with initial balance
+     * @param initialBalance Initial account balance
+     */
+    explicit CreditAccount(double initialBalance);
+
+    /**
+     * Calculate minimum payment
+     */
+    double calculate_minimum_payment() const;
+
+    /**
+     * Check if credit limit is reached
+     */
+    bool check_credit_limit() const;
 };
 
-#endif // CREDITACCOUNT_H
+#endif

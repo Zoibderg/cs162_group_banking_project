@@ -1,40 +1,36 @@
-#ifndef CHECKINGACCOUNT_H
-#define CHECKINGACCOUNT_H
+#ifndef CHECKING_ACCOUNT_H
+#define CHECKING_ACCOUNT_H
 
 #include "BankAccount.h"
-#include <string>
 
 /**
- * CheckingAccount class represents a checking account derived from the base BankAccount class.
- * It provides additional functionality specific to checking accounts, such as overdraft checks and fees.
+ * Checking Account class
  */
-class CheckingAccount : public BankAccount
-{
+class CheckingAccount : public BankAccount {
+private:
+    double overdraft_limit;
+
 public:
-    double account_balance; // Current balance of the checking account
-
     /**
-     * Constructor to initialize the checking account with account details.
+     * Default constructor
      */
-    CheckingAccount(int accountNumber, const std::string &holderName, double initialBalance);
+    CheckingAccount();
 
     /**
-     * Method to check if the account balance has gone negative.
-     * If the balance is negative, an overdraft fee will be applied.
-     * If the balance is positive, no fee is applied.
+     * Constructor with initial balance
+     * @param initialBalance Initial account balance
+     */
+    explicit CheckingAccount(double initialBalance);
+
+    /**
+     * Check if overdraft limit is exceeded
      */
     void check_overdraft();
 
     /**
-     * Method to apply the overdraft fee to the account balance.
-     * Deducts a fixed overdraft fee from the current balance.
+     * Apply overdraft fee
      */
     void apply_overdraft_fee();
-
-private:
-    double overdraft_limit; // Limit for overdrafts on the account
-    double interest = 0.02; // Interest rate for the checking account
-    double overdraft_fee = 25.00; // Fee for overdrawing the account
 };
 
-#endif // CHECKINGACCOUNT_H
+#endif

@@ -3,13 +3,13 @@
 
 #include "MoneyMarketBase.h"
 #include "BalanceHandler.h"
+#include "BankAccount.h"
 
 /**
  * Money Market Deposit Account class
  */
-class MMDA : public MoneyMarketBase {
+class MMDA : public BankAccount, public MoneyMarketBase {
 private:
-    double balance;
     BalanceHandler* handler;
 
 public:
@@ -28,18 +28,6 @@ public:
      * Destructor
      */
     ~MMDA() override;
-
-    /**
-     * Gets the current balance
-     * @return Current account balance
-     */
-    double getBalance() const;
-
-    /**
-     * Sets the account balance
-     * @param amount New balance amount
-     */
-    void setBalance(double amount);
 
     /**
      * Withdraws money from the account
