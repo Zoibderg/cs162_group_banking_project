@@ -14,14 +14,15 @@ double penalty;
      * Default constructor
      */
     ThreeMonthCD() = default;
-virtual void applyInterest(double apy, time_t duration); 
-
-virtual void applyPenalty(double balance, double penalty); 
-
+// function for adding the interest to the customers account
+ void applyInterest(double apy, time_t duration); 
+// function for adding the penalty to the customers account 
+ void applyPenalty(double balance, double penalty); 
+// function to calculate the penalty for the customer 
 double calculatePenalty(); 
-
+// function to calculate the interest for the customer 
 double calculateInterest();
-
+// deconstructor 
  ~ThreeMonthCD();
 };
 
