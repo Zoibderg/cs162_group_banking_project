@@ -2,37 +2,41 @@
 #define MONEY_MARKET_BASE_H
 
 /**
- * Base class for Money Market accounts with defined interest rates and penalties
+ * @class MoneyMarketBase
+ * @brief Base class for Money Market accounts
+ * 
+ * Provides core functionality for money market accounts including
+ * interest rates and penalty calculations.
  */
 class MoneyMarketBase {
 protected:
-    const double monthlyInterest = 1.25;
-    const double maturityPenalty = 0.0;
+    const double monthlyInterest = 1.25;   ///< Monthly interest rate (1.25%)
+    const double maturityPenalty = 0.0;    ///< Penalty rate for early withdrawal
 
 public:
     virtual ~MoneyMarketBase() = default;
 
     /**
-     * Default constructor
+     * @brief Default constructor
      */
     MoneyMarketBase();
 
     /**
-     * Calculates withdrawal penalty based on amount
-     * @param amount The withdrawal amount
-     * @return The calculated penalty
+     * @brief Calculates penalty for early withdrawal
+     * @param amount Withdrawal amount
+     * @return Calculated penalty amount
      */
     virtual double withdrawalPenalty(double amount) const;
 
     /**
-     * Gets the monthly interest rate
-     * @return Monthly interest rate
+     * @brief Gets the current monthly interest rate
+     * @return Monthly interest rate as a percentage
      */
     virtual double getMonthlyInterest() const;
 
     /**
-     * Gets the maturity penalty rate
-     * @return Maturity penalty rate
+     * @brief Gets the current maturity penalty rate
+     * @return Maturity penalty rate as a percentage
      */
     virtual double getMaturityPenalty() const;
 };

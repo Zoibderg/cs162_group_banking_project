@@ -4,6 +4,13 @@
 #include "BankAccountContainer.h"
 using namespace std;
 
+/**
+ * @brief Main entry point for the banking application
+ * @return Exit status code
+ * 
+ * @details Initializes the banking system, loads existing data if available,
+ * runs the main menu interface, and saves data before exit.
+ */
 int main() {
     BankAccountContainer container;
     const string filename = "bank_data.bin";
@@ -17,6 +24,7 @@ int main() {
         cout << "No existing data file found. Starting with empty database." << endl;
     }
     
+    // Create and start menu system
     Menu menu(container);
     menu.start();
     

@@ -6,49 +6,54 @@
 #include "BankAccount.h"
 
 /**
- * Money Market Deposit Account class
+ * @class MMDA
+ * @brief Money Market Deposit Account implementation
+ * 
+ * This class represents a Money Market Deposit Account which combines features
+ * of both checking and savings accounts with higher interest rates and
+ * minimum balance requirements.
  */
 class MMDA : public BankAccount, public MoneyMarketBase {
 private:
-    BalanceHandler* handler;
+    BalanceHandler* handler;  ///< Handler for balance-related operations
 
 public:
     /**
-     * Default constructor
+     * @brief Default constructor
      */
     MMDA();
 
     /**
-     * Constructor with initial balance
-     * @param initialBalance Initial account balance
+     * @brief Constructor with initial balance
+     * @param initialBalance Initial deposit amount
      */
     explicit MMDA(double initialBalance);
 
     /**
-     * Destructor
+     * @brief Destructor to clean up handler
      */
     ~MMDA() override;
 
     /**
-     * Withdraws money from the account
+     * @brief Withdraws money from the account
      * @param amount Amount to withdraw
      */
     void withdraw(double amount) override;
 
     /**
-     * Applies penalty to the account
+     * @brief Applies early withdrawal or other penalties
      */
     void applyPenalty();
 
     /**
-     * Sets the balance of the account
-     * @param newBalance New account balance
+     * @brief Sets the account balance
+     * @param newBalance New balance amount
      */
     void setBalance(double newBalance);
 
     /**
-     * Gets the balance of the account
-     * @return Account balance
+     * @brief Gets the current balance
+     * @return Current account balance
      */
     double getBalance() const override;
 };

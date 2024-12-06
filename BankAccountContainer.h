@@ -1,83 +1,102 @@
 #pragma once
 
-#include <algorithm> // For std::sort
-#include <fstream>   // For file operations like save/load
-#include <vector>    // For managing a dynamic list of customers
-#include "Customer.h" // Provides the definition of Customer class
-#include "BankAccount.h" // Provides the definition of BankAccount class
+#include <algorithm>
+#include <fstream>
+#include <vector>
 #include <memory>
+#include "Customer.h"
+#include "BankAccount.h"
 
-/*
- BankAccountContainer class is responsible for managing customers
- and their associated bank accounts.
- methods or adding, searching, deleting, sorting customers
- saving and loading customer data to/from files.
- Initial by Jordan B
+/**
+ * @class BankAccountContainer
+ * @brief Container class for managing all bank accounts and customers
+ * 
+ * This class serves as the main data store for the banking system,
+ * managing collections of customers and their associated accounts.
+ * Provides functionality for account/customer management and persistence.
  */
-class BankAccountContainer
-{
+class BankAccountContainer {
 private:
-    int accountNumberGenerator = 1000; // Tracks the next unique account number
-    std::vector<std::unique_ptr<Customer>> customers; // List of pointers to all customers in the system
-    std::vector<std::unique_ptr<BankAccount>> accounts; // List of pointers to all bank accounts in the system
+    int accountNumberGenerator = 1000;  ///< Generator for unique account numbers
+    std::vector<std::unique_ptr<Customer>> customers;  ///< Collection of all customers
+    std::vector<std::unique_ptr<BankAccount>> accounts;  ///< Collection of all accounts
 
 public:
-    /* Adds a new customer to the container.
-       Manages customers in the system by pushing
-       the  Customer pointer to the internal vector
-       takes customer A pointer to the Customer object to be added
+    /**
+     * @brief Adds a new customer to the system
+     * @param customer Pointer to customer object to add
      */
     void addCustomer(Customer* customer);
 
-    /* Finds a customer by their unique ID.
-       goes through the vector of customers to locate the one matching the provided ID
-       takes customerId: unique ID of the customer to find
-       returns A pointer to the found Customer object, or nullptr if not found
+    /**
+     * @brief Finds a customer by their ID
+     * @param customerId ID to search for
+     * @return Pointer to found customer or nullptr if not found
      */
     Customer* findCustomerById(const std::string& customerId);
 
-    /* Deletes a customer from the container by their unique ID.
-       Searches for the customer in the vector, removes it from memory
-       @param customerId: unique ID of the customer to delete
-       @return True if the customer was successfully deleted, false if not
+    /**
+     * @brief Deletes a customer from the system
+     * @param customerId ID of customer to delete
+     * @return true if customer was deleted, false otherwise
      */
     bool deleteCustomer(const std::string& customerId);
 
-    bool deleteAccount(int accountNumber); // Declaration for deleting an account
-    BankAccount* findAccountByNumber(int accountNumber); // Declaration for finding an account
+    /**
+     * @brief Deletes an account from the system
+     * @param accountNumber Account number to delete
+     * @return true if account was deleted, false otherwise
+     */
+    bool deleteAccount(int accountNumber);
 
-    /* Displays all customers and their accounts
-       goes through the vector and prints each customer's details */
+    /**
+     * @brief Finds an account by its number
+     * @param accountNumber Account number to search for
+     * @return Pointer to found account or nullptr if not found
+     */
+    BankAccount* findAccountByNumber(int accountNumber);
+
+    /**
+     * @brief Displays all customers in the system
+     */
     void displayAllCustomers() const;
 
-    /* Sorts all customers alphabetically by their last name.
-       Uses the std::sort algorithm with a custom comparator  */
+    /**
+     * @brief Sorts customers by last name
+     */
     void sortCustomersByLastName();
 
-    /* Generates the next unique account number.
-       Each time this is called, it increments the generator so we have unique values.
-       returns The next available account number.
+    /**
+     * @brief Generates next available account number
+     * @return New unique account number
      */
     int getNextAccountNumber();
 
-    // Saves all customers and their associated accounts to a binary file.
-    // takes filename
+    /**
+     * @brief Saves system state to file
+     * @param filename Name of file to save to
+     */
     void saveToFile(const std::string& filename) const;
 
-    // Loads all customers and their associated accounts from a binary file.
-    // takes filename
+    /**
+     * @brief Loads system state from file
+     * @param filename Name of file to load from
+     */
     void loadFromFile(const std::string& filename);
 
-    /* Adds a new bank account to the system.
-       takes a pointer to the BankAccount object to be added.
-    */
+    /**
+     * @brief Adds a new account to the system
+     * @param account Pointer to account to add
+     */
     void addAccount(BankAccount* account);
 
-    /* Destructor for BankAccountContainer.
-       kills all  allocated Customer and BankAccount objects to avoid memory leaks. */
+    /**
+     * @brief Destructor
+     */
     ~BankAccountContainer();
 
+    // Display methods
     void displayAccountsSortedByBalance() const;
     void displayAccountsSortedByLastName() const;
-    void displayAllAccounts() const;  // Helper function to display accounts
+    void displayAllAccounts() const;
 };

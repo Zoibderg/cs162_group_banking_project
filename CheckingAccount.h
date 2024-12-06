@@ -4,31 +4,35 @@
 #include "BankAccount.h"
 
 /**
- * Checking Account class
+ * @class CheckingAccount
+ * @brief Represents a checking account with overdraft protection
+ * 
+ * This class extends the base BankAccount class to provide checking account
+ * specific features like overdraft protection and associated fees.
  */
 class CheckingAccount : public BankAccount {
 private:
-    double overdraft_limit;
+    double overdraft_limit;  ///< Maximum allowed overdraft amount
 
 public:
     /**
-     * Default constructor
+     * @brief Default constructor
      */
     CheckingAccount();
 
     /**
-     * Constructor with initial balance
-     * @param initialBalance Initial account balance
+     * @brief Constructor with initial balance
+     * @param initialBalance Initial deposit amount
      */
     explicit CheckingAccount(double initialBalance);
 
     /**
-     * Check if overdraft limit is exceeded
+     * @brief Checks if account has exceeded overdraft limit
      */
     void check_overdraft();
 
     /**
-     * Apply overdraft fee
+     * @brief Applies standard overdraft fee to the account
      */
     void apply_overdraft_fee();
 };
