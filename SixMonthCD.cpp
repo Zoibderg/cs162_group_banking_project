@@ -1,5 +1,6 @@
 #include <iostream>
 #include "CertificateOfDepositBase.h"
+#include "BankAccount.h"
 using namepsace std;
 
 class SixMonthCD : public BankAccount
