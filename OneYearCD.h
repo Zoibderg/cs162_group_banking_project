@@ -7,7 +7,7 @@
 class OneYearCD
 {
 public:
-  time_t duration;
+time_t duration;
 double apy;
 double penalty; 
     OneYearCD() = default;
@@ -22,12 +22,13 @@ function that applies a penalty to the customers account
 */
 
 void applyPenalty(double balance, double penalty); 
-
+// function for calculating the penalty for the customer 
 double calculatePenalty();
+// function for calculating the interest for the customer 
 double calculateInterest(); 
-/**
- destructor
-*/
+
+ // destructor
+
     ~OneYearCD();
 
   
