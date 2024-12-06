@@ -66,22 +66,32 @@ void Menu::displayAccountMenu() {
         cout << "2. View Account Details" << endl;
         cout << "3. Update Account Information" << endl;
         cout << "4. Delete Account" << endl;
+        cout << "5. List Accounts by Balance" << endl;
+        cout << "6. List Accounts by Last Name" << endl;
         cout << "0. Return to Main Menu" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
+        
+        if (!getValidIntInput(choice, "Enter your choice: ", 0, 6)) {
+            continue;
+        }
 
         switch (choice) {
             case 1:
                 addAccount();
                 break;
             case 2:
-                cout << "View Account Details functionality is not yet implemented." << endl;
+                viewAccountDetails();
                 break;
             case 3:
-                cout << "Update Account Information functionality is not yet implemented." << endl;
+                updateAccountInformation();
                 break;
             case 4:
-                cout << "Delete Account functionality is not yet implemented." << endl;
+                deleteAccount();
+                break;
+            case 5:
+                container.displayAccountsSortedByBalance();
+                break;
+            case 6:
+                container.displayAccountsSortedByLastName();
                 break;
             case 0:
                 cout << "Returning to Main Menu." << endl;
@@ -124,29 +134,29 @@ void Menu::addAccount() {
         return;
     }
 
-    std::shared_ptr<BankAccount> newAccount;
+    std::unique_ptr<BankAccount> newAccount;
 
     switch (accountChoice) {
         case 1:
-            newAccount = std::make_shared<MMDA>(initialBalance);
+            newAccount = std::make_unique<MMDA>(initialBalance);
             break;
         case 2:
-            newAccount = std::make_shared<CheckingAccount>(initialBalance);
+            newAccount = std::make_unique<CheckingAccount>(initialBalance);
             break;
         case 3:
-            newAccount = std::make_shared<SavingsAccount>(initialBalance);
+            newAccount = std::make_unique<SavingsAccount>(initialBalance);
             break;
         case 4:
-            newAccount = std::make_shared<CreditAccount>(initialBalance);
+            newAccount = std::make_unique<CreditAccount>(initialBalance);
             break;
         case 5:
-            newAccount = std::make_shared<OneYearCD>(initialBalance);
+            newAccount = std::make_unique<OneYearCD>(initialBalance);
             break;
         case 6:
-            newAccount = std::make_shared<ThreeMonthCD>(initialBalance);
+            newAccount = std::make_unique<ThreeMonthCD>(initialBalance);
             break;
         case 7:
-            newAccount = std::make_shared<SixMonthCD>(initialBalance);
+            newAccount = std::make_unique<SixMonthCD>(initialBalance);
             break;
         default:
             cout << "Invalid account type selected." << endl;
@@ -157,9 +167,12 @@ void Menu::addAccount() {
         static int accountCounter = 1000;
         newAccount->setAccountNumber(accountCounter++);
         newAccount->setCustomer(customer);
-        container.addAccount(newAccount.get());
+        
+        // Transfer ownership to container
+        container.addAccount(newAccount.release());
+        
         cout << "\nAccount created successfully!" << endl;
-        cout << "Account Number: " << newAccount->getAccountNumber() << endl;
+        cout << "Account Number: " << accountCounter - 1 << endl;
     }
 }
 
@@ -246,21 +259,46 @@ void Menu::displayCDMenu() {
         cout << "3. Apply Interest to CD" << endl;
         cout << "4. Apply Penalty to CD" << endl;
         cout << "0. Return to Main Menu" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
+
+        if (!getValidIntInput(choice, "Enter your choice: ", 0, 4)) {
+            continue;
+        }
+
+        int accountNumber;
+        BankAccount* account;
 
         switch (choice) {
             case 1:
-                cout << "Add Certificate of Deposit functionality is not yet implemented." << endl;
+                addAccount(); // This already handles CD creation
                 break;
             case 2:
-                cout << "View CD Details functionality is not yet implemented." << endl;
+                viewAccountDetails(); // This already handles viewing CD details
                 break;
             case 3:
-                cout << "Apply Interest to CD functionality is not yet implemented." << endl;
+                if (getValidIntInput(accountNumber, "Enter CD Account Number: ", 1000, 9999)) {
+                    account = container.findAccountByNumber(accountNumber);
+                    if (auto* cd = dynamic_cast<CertificateOfDepositBase*>(account)) {
+                        double interest = cd->calculateInterest();
+                        cd->setBalance(cd->getBalance() + interest);
+                        cout << "Interest applied: $" << interest << endl;
+                        cout << "New balance: $" << cd->getBalance() << endl;
+                    } else {
+                        cout << "This account is not a CD." << endl;
+                    }
+                }
                 break;
             case 4:
-                cout << "Apply Penalty to CD functionality is not yet implemented." << endl;
+                if (getValidIntInput(accountNumber, "Enter CD Account Number: ", 1000, 9999)) {
+                    account = container.findAccountByNumber(accountNumber);
+                    if (auto* cd = dynamic_cast<CertificateOfDepositBase*>(account)) {
+                        double penalty = cd->getBalance() * 0.01; // 1% penalty
+                        cd->setBalance(cd->getBalance() - penalty);
+                        cout << "Penalty applied: $" << penalty << endl;
+                        cout << "New balance: $" << cd->getBalance() << endl;
+                    } else {
+                        cout << "This account is not a CD." << endl;
+                    }
+                }
                 break;
             case 0:
                 cout << "Returning to Main Menu." << endl;
@@ -269,6 +307,102 @@ void Menu::displayCDMenu() {
                 cout << "Invalid choice. Please try again." << endl;
         }
     } while (choice != 0);
+}
+
+void Menu::viewAccountDetails() {
+    int accountNumber;
+    cout << "\n===== View Account Details =====" << endl;
+    if (!getValidIntInput(accountNumber, "Enter Account Number: ", 1000, 9999)) {
+        return;
+    }
+
+    BankAccount* account = container.findAccountByNumber(accountNumber);
+    if (account) {
+        account->generateStatement();
+    } else {
+        cout << "Account not found." << endl;
+    }
+}
+
+void Menu::updateAccountInformation() {
+    int accountNumber;
+    cout << "\n===== Update Account Information =====" << endl;
+    if (!getValidIntInput(accountNumber, "Enter Account Number: ", 1000, 9999)) {
+        return;
+    }
+
+    BankAccount* account = container.findAccountByNumber(accountNumber);
+    if (!account) {
+        cout << "Account not found." << endl;
+        return;
+    }
+
+    cout << "\nCurrent Account Details:" << endl;
+    account->displayAccountDetails();
+
+    cout << "\nWhat would you like to update?" << endl;
+    cout << "1. Process Deposit" << endl;
+    cout << "2. Process Withdrawal" << endl;
+    cout << "0. Cancel" << endl;
+
+    int choice;
+    if (!getValidIntInput(choice, "Enter choice: ", 0, 2)) {
+        return;
+    }
+
+    double amount;
+    switch (choice) {
+        case 1:
+            if (getValidDoubleInput(amount, "Enter deposit amount: $")) {
+                account->deposit(amount);
+                cout << "Deposit processed successfully." << endl;
+            }
+            break;
+        case 2:
+            if (getValidDoubleInput(amount, "Enter withdrawal amount: $")) {
+                if (amount <= account->getBalance()) {
+                    account->withdraw(amount);
+                    cout << "Withdrawal processed successfully." << endl;
+                } else {
+                    cout << "Insufficient funds." << endl;
+                }
+            }
+            break;
+        case 0:
+            cout << "Update cancelled." << endl;
+            break;
+    }
+}
+
+void Menu::deleteAccount() {
+    int accountNumber;
+    cout << "\n===== Delete Account =====" << endl;
+    if (!getValidIntInput(accountNumber, "Enter Account Number: ", 1000, 9999)) {
+        return;
+    }
+
+    BankAccount* account = container.findAccountByNumber(accountNumber);
+    if (!account) {
+        cout << "Account not found." << endl;
+        return;
+    }
+
+    cout << "\nAccount Details to be deleted:" << endl;
+    account->displayAccountDetails();
+
+    char confirm;
+    cout << "\nAre you sure you want to delete this account? (y/n): ";
+    cin >> confirm;
+
+    if (tolower(confirm) == 'y') {
+        if (container.deleteAccount(accountNumber)) {
+            cout << "Account deleted successfully." << endl;
+        } else {
+            cout << "Error deleting account." << endl;
+        }
+    } else {
+        cout << "Deletion cancelled." << endl;
+    }
 }
 
 void Menu::start() {

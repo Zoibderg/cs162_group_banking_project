@@ -76,4 +76,8 @@ public:
     /* Destructor for BankAccountContainer.
        kills all  allocated Customer and BankAccount objects to avoid memory leaks. */
     ~BankAccountContainer();
+
+    void displayAccountsSortedByBalance() const;
+    void displayAccountsSortedByLastName() const;
+    void displayAllAccounts() const;  // Helper function to display accounts
 };

@@ -12,6 +12,8 @@ private:
     void updateAccountInformation();
     void deleteAccount();
     Customer* selectOrCreateCustomer();
+    void displayAccountsSortedByBalance();
+    void displayAccountsSortedByLastName();
 
 public:
     explicit Menu(BankAccountContainer& cont) : container(cont) {}
