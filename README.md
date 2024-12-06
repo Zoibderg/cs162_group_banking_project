@@ -58,7 +58,7 @@ This project implements a comprehensive bank account management system that effe
   - `Customer`: Manages customer information
   - `Menu`: Handles user interface operations
 
-## Features to be Implemented
+## Project Path
 
 ### Account Attributes (Phase 1)
 
