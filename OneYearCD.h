@@ -7,25 +7,28 @@
 class OneYearCD
 {
 public:
-    /**
-     * Default constructor
-     */
+  time_t duration;
+double apy;
+double penalty; 
     OneYearCD() = default;
 /*
 function that applies interest to the customers account 
 */
 
-virtual void applyInterest(double apy, time_t duration); 
+void applyInterest(double apy, time_t duration); 
 
 /*
 function that applies a penalty to the customers account 
 */
 
-virtual void applyPenalty(double balance, double penalty); 
+void applyPenalty(double balance, double penalty); 
+
+double calculatePenalty();
+double calculateInterest(); 
 /**
-* Virtual destructor
+ destructor
 */
-    virtual ~OneYearCD() = default;
+    ~OneYearCD();
 
   
 };
