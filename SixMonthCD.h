@@ -10,7 +10,7 @@ public:
     /**
      * Default constructor
      */
-    ThreeYearCD() = default;
+    SixMonthCD() = default;
 /*
 function for applying interest to customers account
 */
@@ -19,12 +19,7 @@ virtual void applyInterest(double apy, time_t duration);
 function for applying penalty to customers account
 */ 
 virtual void applyPenalty(double balance, double penalty); 
-/**
-* Virtual destructor
- */
-    virtual ~SixYearCD() = default;
 
-  
 };
 
 #endif 
