@@ -11,14 +11,21 @@ public:
      * Default constructor
      */
     SixMonthCD() = default;
+
+time_t duration;
+double apy;
+double penalty; 
 /*
 function for applying interest to customers account
 */
-virtual void applyInterest(double apy, time_t duration); 
+ void applyInterest(double apy, time_t duration); 
+void calculateInterest() 
 /*
 function for applying penalty to customers account
 */ 
-virtual void applyPenalty(double balance, double penalty); 
+ void applyPenalty(double balance, double penalty); 
+
+void calculatePenalty() 
 
 };
 
