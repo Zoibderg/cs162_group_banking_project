@@ -1,5 +1,4 @@
 #include "BankAccountContainer.h"
-#include "Customer.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream> // For error messages
@@ -9,7 +8,7 @@
   this implements the BankAccountContainer class, which manages a collection of customers and their accounts
   It does adding, finding, deleting, sorting, and saving/loading customer data
  
- Funcions
+ functions
  void addCustomer(Customer* customer)
  - Adds a new customer to the container
  - parameters:  customer: A pointer to the Customer object to be added
@@ -45,20 +44,22 @@
 
 
 //Adds a new customer to the system.
-//customer: A pointer to the Customer object to be added.
-void BankAccountContainer::addCustomer(Customer* customer)
+//pushes the given customer object into the customers vector
+//takes customer Pointer to the customer object to add
+void BankAccountContainer::addCustomer(Customer * customer)
 {
     customers.push_back(customer);
 }
 
-//finds a customer by their unique ID.
-//customerId: The ID of the customer to search for.
-// returns a pointer to the found Customer object, or nullptr if not found.
+//finds a customer by their unique ID
+// goes through the customers vector and compares customer IDs
+// takes ustomerId" The unique ID of the customer to find.
+// returns a pointer to the found customer, or nullptr if not found
 Customer* BankAccountContainer::findCustomerById(int customerId)
 {
-    for (auto* customer : customers) //auto* makes sure the customer is deduced as a Customer*, adapts if customers' type changes in the future.
+    for (auto* customer : customers)
     {
-        if (customer->getCustomerId() == customerId) // Fixed comparison
+        if (customer->getCustomerId() == customerId)
         {
             return customer;
         }
@@ -66,58 +67,74 @@ Customer* BankAccountContainer::findCustomerById(int customerId)
     return nullptr;
 }
 
-//deletes a customer by their unique ID.
-// customerId: The ID of the customer to delete.
-//returns true if the customer was successfully deleted, false otherwise.
-bool BankAccountContainer::deleteCustomer(int customerId)
+//Deletes a customer by ID
+ // Searches for the customer, deletes the object from memory, and removes it from the vector
+ //takes customerId
+ //returns True if the customer was successfully deleted, false otherwise.
+ bool BankAccountContainer::deleteCustomer(int customerId)
 {
-    for (size_t i = 0; i < customers.size(); ++i) //step through
+    for (size_t i = 0; i < customers.size(); ++i)
     {
         if (customers[i]->getCustomerId() == customerId)
         {
-            delete customers[i]; //free memory for the customer
-            customers.erase(customers.begin() + i); //remove the customer from the vector
-            return true; //successful delete
+            delete customers[i];
+            customers.erase(customers.begin() + i);
+            return true;
         }
     }
-    return false; //Customer not found
+    return false;
 }
 
-//Displays all customers and their associated accounts.
-void BankAccountContainer::displayAllCustomers() const
+// Displays all customers and their associated accounts.
+ //Loops through each customer and calls their displayCustomer() method.
+ void BankAccountContainer::displayAllCustomers() const
 {
-    if (customers.empty()) //no customers :(
+    if (customers.empty())
     {
         std::cout << "No customers to display.\n";
         return;
     }
     for (const auto* customer : customers)
     {
-        customer->displayCustomer();
+        customer->displayCustomer(); // Display the details of each customer
     }
 }
 
-//Sorts the customers alphabetically by their last names
-//compareCustomersByLastName compares two Customer* objects by their last names.
+// sorts customers alphabetically by last name.
+ /* used as a helper for std::sort.
+ * param a Pointer to the first customer.
+ * param b Pointer to the second customer.
+ * returns True if the first customer's last name comes before the second.
+ */
 bool compareCustomersByLastName(const Customer* a, const Customer* b)
 {
     return a->getLastName() < b->getLastName();
 }
 
+/**
+ * Sorts customers alphabetically by last name.
+ * Uses the compareCustomersByLastName function to perform the sorting.
+ */
 void BankAccountContainer::sortCustomersByLastName()
-{   //std::sort takes a comparison function (above) as its third parameter
+{
     std::sort(customers.begin(), customers.end(), compareCustomersByLastName);
 }
 
-//Generates and returns the next unique account number.
-//returns the next unique account number as an integer.
+/**
+ * Generates the next unique account number.
+ * Increments the accountNumberGenerator counter and returns the new number.
+ * returns The next unique account number.
+ */
 int BankAccountContainer::getNextAccountNumber()
 {
     return accountNumberGenerator++;
 }
 
-//Saves all customers and their accounts to a binary file
-//filename: The name of the file to save the data to.
+/*
+ * Saves all customers and their accounts to a binary file.
+ * Writes the number of customers, followed by serialized customer data.
+ * takes filename
+ */
 void BankAccountContainer::saveToFile(const std::string& filename) const
 {
     std::ofstream outFile(filename, std::ios::binary);
@@ -128,18 +145,17 @@ void BankAccountContainer::saveToFile(const std::string& filename) const
     }
 
     size_t customerCount = customers.size();
-    //reinterpret_cast converts a pointer or reference of one type into another type
-    //customerCount is likely an integer (size_t) that the # of customers to read from the file
-    //&customerCount is the address of the variable customerCount. type is size_t*
     outFile.write(reinterpret_cast<const char*>(&customerCount), sizeof(customerCount));
     for (const auto* customer : customers)
     {
-        customer->save(outFile); // Assumes Customer has a save method
+        customer->save(outFile); // Serialize each customer into the file
     }
 }
 
-//Loads all customers and their accounts from a binary file.
-//filename: The name of the file to load the data from.
+/*Loads all customers and their accounts from a binary file.
+ * Reads the customer count, then deserializes customer data from the file.
+ * takes filename
+ */
 void BankAccountContainer::loadFromFile(const std::string& filename)
 {
     std::ifstream inFile(filename, std::ios::binary);
@@ -149,7 +165,7 @@ void BankAccountContainer::loadFromFile(const std::string& filename)
         return;
     }
 
-    //clear existing customers and free memory
+    // Cleanup any existing customer data
     for (auto* customer : customers)
     {
         delete customer;
@@ -160,8 +176,22 @@ void BankAccountContainer::loadFromFile(const std::string& filename)
     inFile.read(reinterpret_cast<char*>(&customerCount), sizeof(customerCount));
     for (size_t i = 0; i < customerCount; ++i)
     {
-        Customer* customer = new Customer(); //Allocate memory for each customer
-        customer->load(inFile);              //Load customer data
+        Customer* customer = new Customer();
+        customer->load(inFile); // Deserialize customer from the file
         customers.push_back(customer);
+    }
+}
+
+/* Destructor to clean up dynamically allocated memory.
+ * Deletes all customers and accounts stored in their respective vectors. */
+BankAccountContainer::~BankAccountContainer()
+{
+    for (Customer* customer : customers)
+    {
+        delete customer;
+    }
+    for (BankAccount* account : accounts)
+    {
+        delete account;
     }
 }

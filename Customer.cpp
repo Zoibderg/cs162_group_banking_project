@@ -1,66 +1,86 @@
 #include "Customer.h"
+#include "BankAccount.h"
 #include <iostream>
+#include <fstream>
+
 
 // Default Constructor
-// Initializes a customer with default values (ID = 0, empty names).
-Customer::Customer() : customer_id(0), first_name(""), last_name("") {}
+Customer::Customer() : customerId(generateCustomerId()), firstName(""), lastName("") {}
 
 // Overloaded Constructor
-// Initializes a customer with specific ID, first name, and last name.
-// @param id: Unique identifier for the customer.
-// @param firstName: Customer's first name.
-// @param lastName: Customer's last name.
-Customer::Customer(int id, const std::string& firstName, const std::string& lastName)
-    : customer_id(id), first_name(firstName), last_name(lastName) {}
+Customer::Customer(const std::string& first, const std::string& last)
+    : customerId(generateCustomerId()), firstName(first), lastName(last) {
+}
 
 // Getters
-// Returns the customer ID.
 int Customer::getCustomerId() const {
-    return customer_id;
+    return customerId;
 }
 
-// Returns the first name of the customer.
 std::string Customer::getFirstName() const {
-    return first_name;
+    return firstName;
 }
 
-// Returns the last name of the customer.
 std::string Customer::getLastName() const {
-    return last_name;
+    return lastName;
 }
 
-// Returns the full name of the customer.
 std::string Customer::getFullName() const {
-    return first_name + " " + last_name;
+    return firstName + " " + lastName;
 }
 
 // Account Management
-
-// Adds a bank account to the customer's list of accounts.
-// @param account: Pointer to a BankAccount object to be added.
 void Customer::addAccount(BankAccount* account) {
     accounts.push_back(account);
 }
 
-// Updates a bank account with the given account ID.
-// This is a placeholder function that currently outputs a message indicating it's not implemented.
-// @param account_id: The unique identifier for the account to be updated.
 void Customer::updateAccount(int account_id) {
-    // Placeholder for updating an account based on ID (e.g., modifying account details)
     std::cout << "Update Account functionality is not yet implemented." << std::endl;
 }
 
-// Displays all accounts associated with the customer.
-// Outputs the customer details and calls the display function for each associated account.
+// Display all accounts associated with the customer
 void Customer::displayAccounts() const {
-    std::cout << "Customer: " << getFullName() << " (ID: " << customer_id << ")" << std::endl;
+    std::cout << "Customer: " << getFullName() << " (ID: " << customerId << ")" << std::endl;
     for (const auto* account : accounts) {
-        account->generateStatement(); // BankAccount has a generateStatement() function
+        account->generateStatement();
     }
 }
 
-// Destructor to handle account pointers
-// Iterates through all accounts and deletes the dynamically allocated memory.
+// Display customer details
+void Customer::displayCustomer() const {
+    std::cout << "Customer ID: " << customerId
+        << ", Name: " << getFullName() << std::endl;
+}
+
+// Save customer data to file
+void Customer::save(std::ofstream& outFile) const {
+    size_t firstNameSize = firstName.size();
+    size_t lastNameSize = lastName.size();
+
+    outFile.write(reinterpret_cast<const char*>(&customerId), sizeof(customerId));
+    outFile.write(reinterpret_cast<const char*>(&firstNameSize), sizeof(firstNameSize));
+    outFile.write(reinterpret_cast<const char*>(&lastNameSize), sizeof(lastNameSize));
+    outFile.write(firstName.c_str(), firstNameSize);
+    outFile.write(lastName.c_str(), lastNameSize);
+}
+
+// Load customer data from file
+void Customer::load(std::ifstream& inFile) {
+    size_t firstNameSize = 0, lastNameSize = 0;
+
+    // Read the ID and sizes
+    inFile.read(reinterpret_cast<char*>(&customerId), sizeof(customerId));
+    inFile.read(reinterpret_cast<char*>(&firstNameSize), sizeof(firstNameSize));
+    inFile.read(reinterpret_cast<char*>(&lastNameSize), sizeof(lastNameSize));
+
+    // Resize and read strings
+    firstName.resize(firstNameSize);
+    lastName.resize(lastNameSize);
+    inFile.read(&firstName[0], firstNameSize);
+    inFile.read(&lastName[0], lastNameSize);
+}
+
+// Destructor
 Customer::~Customer() {
     for (auto* account : accounts) {
         delete account;

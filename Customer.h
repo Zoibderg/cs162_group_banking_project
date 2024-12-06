@@ -28,67 +28,32 @@ private:
     }
 
 public:
-    /*
-     * Default constructor for the Customer class.
-     * Initializes customer attributes to default values.
-     */
-    Customer() : customerId(generateCustomerId()), firstName(""), lastName("") {}
+    // Default constructor
+    Customer();
 
-    /*
-     * Parameterized constructor for the Customer class.
-     * firstName: Customer's first name.
-     * lastName: Customer's last name.
-     */
-    Customer(const std::string& first, const std::string& last) 
-        : customerId(generateCustomerId()), firstName(first), lastName(last) {}
+    // Parameterized constructor
+    Customer(const std::string& first, const std::string& last);
 
-    /*
-     * Gets the customer's unique identifier.
-     * Returns customer ID as a string.
-     */
-    std::string getId() const {
-        return std::to_string(customerId);
-    }
+    // Getters for customer details
+    int getCustomerId() const;
+    std::string getFirstName() const;
+    std::string getLastName() const;
+    std::string getFullName() const;
 
-    /*
-     * Gets the customer's first name.
-     * Returns first name as a string.
-     */
-    std::string getFirstName() const { return firstName; }
-
-    /*
-     * Gets the customer's last name.
-     * Returns last name as a string.
-     */
-    std::string getLastName() const { return lastName; }
-
-    /*
-     * Gets the customer's full name.
-     * Returns full name as a string.
-     */
-    std::string getFullName() const { return firstName + " " + lastName; }
-
-    /*
-     * Adds a bank account to the customer's list of accounts.
-     * account: Pointer to the bank account to be added.
-     */
-    void addAccount(BankAccount* account) { accounts.push_back(account); }
-
-    /*
-     * Updates an existing bank account by account ID.
-     * Placeholder function for future implementation.
-     * account_id: Unique identifier of the account to be updated.
-     */
+    // Account management
+    void addAccount(BankAccount* account);
     void updateAccount(int account_id);
 
-    /*
-     * Displays information about all the bank accounts associated with the customer.
-     */
+    // Display all accounts for the customer
     void displayAccounts() const;
 
-    /*
-     * Destructor for the Customer class.
-     * Ensures that any resources are properly cleaned up.
-     */
+    // Display customer details (name and ID)
+    void displayCustomer() const;
+
+    // Save and load customer details
+    void save(std::ofstream& outFile) const;
+    void load(std::ifstream& inFile);
+
+    // Destructor to handle cleanup
     ~Customer();
 };
