@@ -5,20 +5,20 @@
 class Menu
 {
 private:
-    BankAccountContainer container; // Manages all accounts and customers
+    BankAccountContainer& container; // Reference to container
 
+    void addAccount();
+    void viewAccountDetails();
+    void updateAccountInformation();
+    void deleteAccount();
+    Customer* selectOrCreateCustomer();
+
+public:
+    explicit Menu(BankAccountContainer& cont) : container(cont) {}
+    
     void displayMainMenu();
     void displayAccountMenu();
     void displayTransactionMenu();
     void displayCDMenu();
-
-    void addAccount();
-    void viewAccountDetails(); // Declaration for viewing account details
-    void updateAccountInformation(); // Declaration for updating account information
-    void deleteAccount(); // Declaration for deleting accounts
-
-    Customer* selectOrCreateCustomer();
-
-public:
     void start(); // Entry point to start the menu system
 };

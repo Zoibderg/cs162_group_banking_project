@@ -58,14 +58,12 @@ void BankAccount::generateStatement() const {
     for (const auto& transaction : transactions) {
         std::cout << transaction << std::endl;
     }
-    void BankAccount::displayAccountDetails() const
-    {
-        cout << "Account Number: " << accountNumber << endl;
-        cout << "Account Type: " << accountType << endl;
-        cout << "Account Status: " << accountStatus << endl;
-        cout << "Balance: $" << balance << endl;
-    }
+}
 
-
+void BankAccount::displayAccountDetails() const {
+    std::cout << "Account Number: " << accountNumber << std::endl;
+    std::cout << "Account Type: " << accountType << std::endl;
+    std::cout << "Account Status: " << accountStatus << std::endl;
+    std::cout << "Balance: $" << balance << std::endl;
 }
 
