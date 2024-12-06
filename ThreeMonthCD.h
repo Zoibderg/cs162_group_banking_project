@@ -4,7 +4,7 @@
 /**              
  * Class for handling the Three Year CD operations
  */
-class ThreeYearCD
+class ThreeMonthCD
 {
 public:
 time_t duration;
@@ -13,15 +13,16 @@ double penalty;
     /**
      * Default constructor
      */
-    ThreeYearCD() = default;
+    ThreeMonthCD() = default;
 virtual void applyInterest(double apy, time_t duration); 
 
 virtual void applyPenalty(double balance, double penalty); 
 
-void calculatePenalty() 
+double calculatePenalty(); 
 
-void calculateInterest()
+double calculateInterest();
 
+ ~ThreeMonthCD();
 };
 
 #endif 
