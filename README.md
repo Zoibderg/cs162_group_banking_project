@@ -1,5 +1,10 @@
 # Bank Account Management System
 
+![C++](https://img.shields.io/badge/C%2B%2B-11-blue.svg)
+![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Status](https://img.shields.io/badge/status-completed-success.svg)
+
 #### Team Members
 
 * Jordan Bassett
@@ -10,7 +15,48 @@
 
 ## Overview
 
-This project aims to develop a bank account management system that can effectively manage multiple bank accounts with various features, such as savings, checking, and credit accounts. It utilizes a series of data structures to create, save, and load account information in different formats. The project is divided into phases, with the current status covering Phases 1 and 2.
+This project implements a comprehensive bank account management system that effectively manages multiple bank account types including checking accounts, certificates of deposit (CDs), and money market accounts. The system utilizes object-oriented design principles and robust data structures to handle account operations and customer management.
+
+## Implemented Features
+
+### Account Types
+- Basic Bank Account (Base functionality)
+- Checking Account
+- Money Market Deposit Account (MMDA)
+- Certificates of Deposit (CDs):
+  - Three Month CD
+  - Six Month CD
+  - One Year CD
+
+### Core Functionality
+- Account Management:
+  - Create and manage multiple account types
+  - Track account status and balances
+  - Generate account statements
+  - Process deposits and withdrawals
+  - Maintain transaction history
+
+- Customer Management:
+  - Customer profile creation
+  - Multiple accounts per customer
+  - Account holder information tracking
+
+### Implemented Class Structure
+- Base Classes:
+  - `BankAccount`: Foundation for all account types
+  - `CertificateOfDepositBase`: Base for CD accounts
+  - `MoneyMarketBase`: Base for money market accounts
+
+- Account Types:
+  - `CheckingAccount`
+  - `MMDA` (Money Market Deposit Account)
+  - `ThreeMonthCD`
+  - `SixMonthCD`
+  - `OneYearCD`
+
+- Supporting Classes:
+  - `Customer`: Manages customer information
+  - `Menu`: Handles user interface operations
 
 ## Features to be Implemented
 
