@@ -1,69 +1,61 @@
-#pragma once
-#include <vector>
-#include <string>
-#include "Customer.h"
-#include "BankAccount.h"
+#include "BankAccountContainer.h"
+#include <algorithm>
+#include <fstream>
 
-/**
- * Manages all customers and their associated accounts.
- * Provides functionality for adding, finding, deleting, and sorting customers,
- * as well as saving and loading customer data to/from a file.
- */
-class BankAccountContainer
-{
-private:
-    int accountNumberGenerator = 1000; // Tracks the next unique account number
-    std::vector<Customer*> customers; // Stores all customers
-    std::vector<BankAccount*> accounts; // Stores all bank accounts
+void BankAccountContainer::addCustomer(Customer* customer) {
+    customers.push_back(customer);
+}
 
-public:
-    /**
-     * Adds a new customer to the system.
-     * @param customer Pointer to the customer object to add.
-     */
-    void addCustomer(Customer* customer);
+Customer* BankAccountContainer::findCustomerById(const std::string& customerId) {
+    for (Customer* customer : customers) {
+        if (customer->getId() == customerId) {
+            return customer;
+        }
+    }
+    return nullptr;
+}
 
-    /**
-     * Finds a customer by their unique ID.
-     * @param customerId The unique ID of the customer to find.
-     * @return Pointer to the found customer, or nullptr if not found.
-     */
-    Customer* findCustomerById(int customerId);
+bool BankAccountContainer::deleteCustomer(const std::string& customerId) {
+    auto it = std::find_if(customers.begin(), customers.end(),
+        [&customerId](Customer* c) { return c->getId() == customerId; });
+    if (it != customers.end()) {
+        delete* it;
+        customers.erase(it);
+        return true;
+    }
+    return false;
+}
 
-    /**
-     * Deletes a customer by their unique ID.
-     * @param customerId The unique ID of the customer to delete.
-     * @return True if the customer was successfully deleted, false otherwise.
-     */
-    bool deleteCustomer(int customerId);
+void BankAccountContainer::displayAllCustomers() const {
+    for (const Customer* customer : customers) {
+        std::cout << "Customer ID: " << customer->getId() << std::endl;
+        std::cout << "Name: " << customer->getFullName() << std::endl;
+        customer->displayAccounts();
+        std::cout << "------------------------\n";
+    }
+}
 
-    /**
-     * Displays all customers and their associated accounts.
-     */
-    void displayAllCustomers() const;
+void BankAccountContainer::sortCustomersByLastName() {
+    std::sort(customers.begin(), customers.end(),
+        [](Customer* a, Customer* b) { return a->getLastName() < b->getLastName(); });
+}
 
-    /**
-     * Sorts customers alphabetically by their last name.
-     */
-    void sortCustomersByLastName();
+int BankAccountContainer::getNextAccountNumber() {
+    return accountNumberGenerator++;
+}
 
-    /**
-     * Generates and returns the next unique account number.
-     * @return The next unique account number.
-     */
-    int getNextAccountNumber();
+void BankAccountContainer::saveToFile(const std::string& filename) const {
+    std::ofstream file(filename, std::ios::binary);
+    if (file.is_open()) {
+        // Implementation for saving to file
+        file.close();
+    }
+}
 
-    /**
-     * Saves all customers and their accounts to a binary file.
-     * @param filename The name of the file to save to.
-     */
-    void saveToFile(const std::string& filename) const;
-
-    /**
-     * Loads all customers and their accounts from a binary file.
-     * @param filename The name of the file to load from.
-     */
-    void loadFromFile(const std::string& filename);
-
-    /**
-     * Adds a new bank account to the
+void BankAccountContainer::loadFromFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    if (file.is_open()) {
+        // Implementation for loading from file
+        file.close();
+    }
+}
