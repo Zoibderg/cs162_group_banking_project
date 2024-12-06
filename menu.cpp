@@ -193,7 +193,7 @@ Customer* Menu::selectOrCreateCustomer() {
         string id;
         cout << "Enter Customer ID: ";
         cin >> id;
-        return container.findCustomer(id);
+        return container.findCustomerById(id);
     }
     else if (choice == 2) {
         string firstName, lastName;
@@ -206,7 +206,8 @@ Customer* Menu::selectOrCreateCustomer() {
         Customer* newCustomer = new Customer(firstName, lastName);
         
         // Check if generated ID already exists
-        while (container.findCustomer(newCustomer->getId()) != nullptr) {
+        while (container.findCustomerById(newCustomer->getId()) != nullptr)
+        {
             delete newCustomer;
             newCustomer = new Customer(firstName, lastName);
         }
