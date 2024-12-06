@@ -27,7 +27,8 @@ public:
      */
     static void calculate_interest()
     {
-        // Placeholder for interest calculation
+       interestBalance = initalBalance * interest_rate; 
+        interestaccumulated = interestBalance - initialBalance; 
     }
 
     /**
@@ -36,7 +37,10 @@ public:
      */
     static void apply_interest()
     {
-        // Placeholder for applying interest
+        cout << "Your current interest rate is 1.05%" << endl; 
+        cout << " Total accumulated is: $" << interestaccumulated << endl; 
+        cout << " Total Savings Balance: $" << interestBalance << endl; 
+             
     }
 
     /**
