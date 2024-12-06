@@ -48,6 +48,22 @@ private:
      * @return Pointer to selected or created customer, nullptr if operation fails
      */
     Customer* selectOrCreateCustomer();
+
+    // Displays the details of a specific account by its account number
+    void viewAccountDetails();
+
+     //Updates the info of an account such as balance, status, holder.
+     void updateAccountInformation();
+
+    //Deletes an account by its account number
+    void deleteAccount();
+
+    //Processes a new transaction (Deposit or Withdrawal)
+    void processTransaction();
+
+    //Cancels an existing transaction by its transaction ID
+    void cancelTransaction();
+
 };
 
 #endif
